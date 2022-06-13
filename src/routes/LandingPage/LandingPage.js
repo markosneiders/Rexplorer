@@ -4,6 +4,7 @@ import "./LandingPage.css"
 import NET from "vanta/dist/vanta.net.min"
 import MetaConnect from "../../components/MetaMaskAuth/MetaConnect"
 import * as THREE from "three"
+import { Link } from "react-router-dom"
 
 const LandingPage = () => {
     const [vantaEffect, setVantaEffect] = useState(0)
@@ -38,6 +39,7 @@ const LandingPage = () => {
                 <Header />
                 <div className="mainScreen">
                     <div className="mainScreen__authBox">
+                        <Link to="MainPage">MainPage</Link>
                         <div className="metamaskButton">
                             <MetaConnect />
                         </div>
