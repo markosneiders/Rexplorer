@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import Navbar from "../../components/NavBar/Navbar"
+import Header from "../../components/Header/Header"
 import "./LandingPage.css"
 import NET from "vanta/dist/vanta.net.min"
 import MetaConnect from "../../components/MetaMaskAuth/MetaConnect"
@@ -35,7 +35,7 @@ const LandingPage = () => {
     return (
         <div ref={vantaRef}>
             <div className="root">
-                <Navbar />
+                <Header />
                 <div className="mainScreen">
                     <div className="mainScreen__authBox">
                         <div className="metamaskButton">
