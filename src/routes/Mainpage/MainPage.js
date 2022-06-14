@@ -1,17 +1,66 @@
 import React from "react"
 import "./MainPage.css"
 import { Graph } from "react-d3-graph"
+import axios from "axios"
+import { useState, useEffect } from "react"
 
 const Mainpage = () => {
-    // graph payload (with minimalist structure)
-    const data = {
-        nodes: [{ id: "Harry" }, { id: "Sally" }, { id: "Alice" }],
-        links: [
-            { source: "Harry", target: "Sally" },
-            { source: "Harry", target: "Alice" },
-        ],
+    const [data, setData] = useState({
+        nodes: [{ id: "Loading" }],
+        links: [],
         focusedNodeId: "nodeIdToTriggerZoomAnimation",
+    })
+
+    const nodeDataGen = (item) => {
+        const data1 = []
+        const data2 = []
+        for (var i = 0; i < item.length; i++) {
+            if (data1.indexOf(item[i].from_address) > -1 !== true) {
+                data1.push(item[i].from_address)
+            }
+            if (data1.indexOf(item[i].to_address) > -1 !== true) {
+                data1.push(item[i].to_address)
+            }
+        }
+        return data1
     }
+
+    const getData = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.covalenthq.com/v1/1/address/0xa79E63e78Eec28741e711f89A672A4C40876Ebf3/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}`
+            )
+            //removes null from Covalent results
+            const no_null_response = response.data.data.items.filter(
+                (item) => item.to_address !== null
+            )
+
+            const noRepeatNodes = await nodeDataGen(no_null_response)
+
+            await setData({
+                nodes: noRepeatNodes.map((item) => ({
+                    id: `${item.slice(0, 6)}...${item.slice(-4)}`,
+                })),
+                links: [],
+                links: no_null_response.map((item) => ({
+                    source: `${item.from_address.slice(
+                        0,
+                        6
+                    )}...${item.from_address.slice(-4)}`,
+                    target: `${item.to_address.slice(
+                        0,
+                        6
+                    )}...${item.to_address.slice(-4)}`,
+                })),
+                focusedNodeId: "nodeIdToTriggerZoomAnimation",
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    useEffect(() => {
+        getData()
+    }, [])
 
     // the graph configuration, just override the ones you need
     const myConfig = {
@@ -33,23 +82,23 @@ const Mainpage = () => {
         staticGraphWithDragAndDrop: false,
         width: 800,
         d3: {
-            alphaTarget: 0.05,
-            gravity: -400,
-            linkLength: 300,
+            alphaTarget: 1,
+            gravity: -250,
+            linkLength: 100,
             linkStrength: 1,
             disableLinkForce: false,
         },
         node: {
-            color: "#d3d3d3",
-            fontColor: "black",
+            color: "#ff3f81",
+            fontColor: "white",
             fontSize: 12,
             fontWeight: "normal",
-            highlightColor: "red",
-            highlightFontSize: 12,
+            highlightColor: "#ffffff",
+            highlightFontSize: 18,
             highlightFontWeight: "bold",
-            highlightStrokeColor: "SAME",
+            highlightStrokeColor: "#ff3f81",
             highlightStrokeWidth: 1.5,
-            labelProperty: "name",
+            labelProperty: "id",
             mouseCursor: "pointer",
             opacity: 1,
             renderLabel: true,
@@ -60,23 +109,24 @@ const Mainpage = () => {
             symbolType: "circle",
         },
         link: {
-            color: "#d3d3d3",
+            color: "#ffffff",
             fontColor: "red",
             fontSize: 10,
             fontWeight: "normal",
-            highlightColor: "blue",
+            highlightColor: "#ff3f81",
             highlightFontSize: 8,
             highlightFontWeight: "bold",
             mouseCursor: "pointer",
-            opacity: 1,
+            opacity: 0.5,
             renderLabel: false,
             semanticStrokeWidth: false,
-            strokeWidth: 4,
+            strokeWidth: 1,
             markerHeight: 6,
             markerWidth: 6,
             strokeDasharray: 0,
             strokeDashoffset: 0,
-            strokeLinecap: "butt",
+            strokeLinecap: "round",
+            type: "CURVE_SMOOTH",
         },
     }
 
@@ -87,20 +137,39 @@ const Mainpage = () => {
     const onClickLink = function (source, target) {
         window.alert(`Clicked link between ${source} and ${target}`)
     }
-    return (
-        <div className="root">
-            <div className="graph_div">
-                <h1 className="graph_title">Currently viewing: Transactions</h1>
-                <Graph
-                    id="graph-id" // id is mandatory
-                    data={data}
-                    config={myConfig}
-                    onClickNode={onClickNode}
-                    onClickLink={onClickLink}
-                />
+
+    try {
+        return (
+            <div className="root">
+                <div className="graph_div" style={{ width: 580, height: 800 }}>
+                    <h1 className="graph_title">Graph configuration</h1>
+                </div>
+                <div className="info_div">
+                    <div className="graph_info">
+                        <h3 className="graph_title">Current node</h3>
+                    </div>
+                    <div className="graph_settings">
+                        <h3 className="graph_title">Graph customization</h3>
+                    </div>
+                </div>
+                <div className="graph_div">
+                    <h1
+                        className="graph_title"
+                        style={{ position: "absolute" }}
+                    >
+                        Currently viewing: Transactions
+                    </h1>
+                    <Graph
+                        id="graph-id" // id is mandatory
+                        data={data}
+                        config={myConfig}
+                        onClickNode={onClickNode}
+                        onClickLink={onClickLink}
+                    />
+                </div>
             </div>
-        </div>
-    )
+        )
+    } catch {}
 }
 
 export default Mainpage
