@@ -4,65 +4,18 @@ import { Graph } from "react-d3-graph"
 import axios from "axios"
 import { useState, useEffect } from "react"
 
+const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
+
 const Mainpage = () => {
     const [data, setData] = useState({
         nodes: [{ id: "Loading" }],
         links: [],
         focusedNodeId: "nodeIdToTriggerZoomAnimation",
     })
+    const [currentNode, setCurrentNode] = useState({
+        name: "",
+    })
 
-    const nodeDataGen = (item) => {
-        const data1 = []
-        const data2 = []
-        for (var i = 0; i < item.length; i++) {
-            if (data1.indexOf(item[i].from_address) > -1 !== true) {
-                data1.push(item[i].from_address)
-            }
-            if (data1.indexOf(item[i].to_address) > -1 !== true) {
-                data1.push(item[i].to_address)
-            }
-        }
-        return data1
-    }
-
-    const getData = async () => {
-        try {
-            const response = await axios.get(
-                `https://api.covalenthq.com/v1/1/address/0xa79E63e78Eec28741e711f89A672A4C40876Ebf3/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}`
-            )
-            //removes null from Covalent results
-            const no_null_response = response.data.data.items.filter(
-                (item) => item.to_address !== null
-            )
-
-            const noRepeatNodes = await nodeDataGen(no_null_response)
-
-            await setData({
-                nodes: noRepeatNodes.map((item) => ({
-                    id: `${item.slice(0, 6)}...${item.slice(-4)}`,
-                })),
-                links: [],
-                links: no_null_response.map((item) => ({
-                    source: `${item.from_address.slice(
-                        0,
-                        6
-                    )}...${item.from_address.slice(-4)}`,
-                    target: `${item.to_address.slice(
-                        0,
-                        6
-                    )}...${item.to_address.slice(-4)}`,
-                })),
-                focusedNodeId: "nodeIdToTriggerZoomAnimation",
-            })
-        } catch (err) {
-            console.error(err)
-        }
-    }
-    useEffect(() => {
-        getData()
-    }, [])
-
-    // the graph configuration, just override the ones you need
     const myConfig = {
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
@@ -119,7 +72,7 @@ const Mainpage = () => {
             mouseCursor: "pointer",
             opacity: 0.5,
             renderLabel: false,
-            semanticStrokeWidth: false,
+            semanticStrokeWidth: true,
             strokeWidth: 1,
             markerHeight: 6,
             markerWidth: 6,
@@ -137,6 +90,84 @@ const Mainpage = () => {
     const onClickLink = function (source, target) {
         window.alert(`Clicked link between ${source} and ${target}`)
     }
+
+    //Generates a list of all nodes invovled with transactions (without duplicates)
+    const nodeIdGen = (item) => {
+        const data1 = []
+        for (var i = 0; i < item.length; i++) {
+            if (data1.indexOf(item[i].from_address) > -1 !== true) {
+                data1.push(item[i].from_address)
+            }
+            if (data1.indexOf(item[i].to_address) > -1 !== true) {
+                data1.push(item[i].to_address)
+            }
+        }
+        return data1
+    }
+
+    // Removes duplicate transactions for graph pourposes (react freaks out about objects having the same keys)
+    const dupeLinkRemoval = (item) => {
+        const data1 = []
+        const data2 = []
+        for (var i = 0; i < item.length; i++) {
+            if (
+                data1.indexOf(item[i].from_address + item[i].to_address) >
+                    -1 !==
+                true
+            ) {
+                data1.push(item[i].from_address + item[i].to_address)
+            }
+        }
+        for (var i = 0; i < data1.length; i++) {
+            data2.push({
+                from_address: data1[i].slice(0, 42),
+                to_address: data1[i].slice(-42),
+            })
+        }
+        return data2
+    }
+
+    const getData = async () => {
+        try {
+            const response = await axios.get(
+                `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}`
+            )
+            //removes null from Covalent results
+            const no_null_response = response.data.data.items.filter(
+                (item) => item.to_address !== null
+            )
+
+            // Calls functons and creates a list of nodes and links without duplicates to pass on to the graph
+            const nodes = await nodeIdGen(no_null_response)
+            const links = await dupeLinkRemoval(no_null_response)
+
+            await setData({
+                nodes: nodes.map((item) => ({
+                    id: `${item.slice(0, 6)}...${item.slice(-4)}`,
+                    symbolType: item == graphAddress ? "square" : "",
+                })),
+                links: [],
+                links: links.map((item) => ({
+                    source: `${item.from_address.slice(
+                        0,
+                        6
+                    )}...${item.from_address.slice(-4)}`,
+                    target: `${item.to_address.slice(
+                        0,
+                        6
+                    )}...${item.to_address.slice(-4)}`,
+                })),
+                focusedNodeId: "nodeIdToTriggerZoomAnimation",
+            })
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    useEffect(() => {
+        getData()
+    }, [])
+
+    // the graph configuration, just override the ones you need
 
     try {
         return (
