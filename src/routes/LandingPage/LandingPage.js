@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react"
 import Header from "../../components/Header/Header"
+import ConnectWalletButton from "../../components/MetaMaskAuth/ConnectWalletButton"
 import "./LandingPage.css"
 import NET from "vanta/dist/vanta.net.min"
-import MetaConnect from "../../components/MetaMaskAuth/MetaConnect"
+import Web3 from "web3"
 import * as THREE from "three"
-import { Link } from "react-router-dom"
 
 const LandingPage = () => {
+    const [loading, setLoading] = useState(false)
+    const [address, setAddress] = useState("")
+
     const [vantaEffect, setVantaEffect] = useState(0)
     const vantaRef = useRef(null)
 
@@ -33,16 +36,38 @@ const LandingPage = () => {
         }
     }, [vantaEffect])
 
+    const onPressConnect = async () => {
+        setLoading(true)
+
+        try {
+            if (window?.ethereum?.isMetaMask) {
+                const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts",
+                })
+
+                const account = Web3.utils.toChecksumAddress(accounts[0])
+                setAddress(account)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        setLoading(false)
+    }
+    const onPressLogout = () => setAddress("")
+
     return (
-        <div ref={vantaRef}>
-            <div className="root">
-                <Header />
-                <div className="mainScreen">
-                    <div className="mainScreen__authBox">
-                        <Link to="MainPage">MainPage</Link>
-                        <div className="metamaskButton">
-                            <MetaConnect />
-                        </div>
+        <div className="root">
+            <div ref={vantaRef}>
+                <div>
+                    <Header />
+                    <div className="mainScreen">
+                        <ConnectWalletButton
+                            onPressConnect={onPressConnect}
+                            onPressLogout={onPressLogout}
+                            loading={loading}
+                            address={address}
+                        />
                     </div>
                 </div>
             </div>
