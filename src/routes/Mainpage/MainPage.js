@@ -3,9 +3,11 @@ import "./MainPage.css"
 import { Graph } from "react-d3-graph"
 import axios from "axios"
 import { useState, useEffect } from "react"
+import GraphTab from "../../components/GraphTab/Graphtab"
 
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
-const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
+//const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
+const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 
 const Mainpage = () => {
     const [data, setData] = useState({
@@ -15,9 +17,8 @@ const Mainpage = () => {
     })
     const graphLinks = []
     const [linkInfo, setLinkInfo] = useState({})
-    const [currentLinkInfo, setCurrentLinkInfo] = useState(
-        "Select link to explore"
-    )
+    const [currentLinkInfo, setCurrentLinkInfo] = useState()
+    const [tabDown, setTabDown] = useState(false)
     const myConfig = {
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
@@ -25,17 +26,18 @@ const Mainpage = () => {
         focusAnimationDuration: 0.75,
         focusZoom: 1,
         freezeAllDragEvents: false,
-        height: 800,
+        height: window.innerHeight,
         highlightDegree: 1,
         highlightOpacity: 0.2,
         linkHighlightBehavior: true,
         maxZoom: 8,
         minZoom: 0.1,
+        initialZoom: 0.5,
         nodeHighlightBehavior: true,
         panAndZoom: false,
         staticGraph: false,
         staticGraphWithDragAndDrop: false,
-        width: 800,
+        width: window.innerWidth,
         d3: {
             alphaTarget: 1,
             gravity: -250,
@@ -110,8 +112,8 @@ const Mainpage = () => {
         const filtered = allId.filter((trans) => {
             return trans.id === inputId
         })
-        for (var i = 0; i < filtered.length; i++) {
-            returnData[i] = linkInfo[filtered[i].index]
+        for (var x = 0; x < filtered.length; x++) {
+            returnData[x] = linkInfo[filtered[x].index]
         }
         setCurrentLinkInfo(returnData)
     }
@@ -138,10 +140,10 @@ const Mainpage = () => {
                 data1.push(item[i].from_address + item[i].to_address)
             }
         }
-        for (var i = 0; i < data1.length; i++) {
+        for (var x = 0; x < data1.length; x++) {
             graphLinks.push({
-                from_address: formatAddress(data1[i].slice(0, 42)),
-                to_address: formatAddress(data1[i].slice(-42)),
+                from_address: formatAddress(data1[x].slice(0, 42)),
+                to_address: formatAddress(data1[x].slice(-42)),
             })
         }
     }
@@ -164,7 +166,7 @@ const Mainpage = () => {
 
             await setData({
                 nodes: nodes.map((item) => ({
-                    id: `${item.slice(0, 6)}...${item.slice(-4)}`,
+                    id: formatAddress(item),
                 })),
                 links: graphLinks.map((item) => ({
                     source: item.from_address,
@@ -180,39 +182,57 @@ const Mainpage = () => {
         getData()
     }, [])
 
-    try {
-        return (
-            <div className="root">
-                <div className="graph_div" style={{ width: 580, height: 800 }}>
-                    <h1 className="graph_title">Graph configuration</h1>
-                </div>
-                <div className="info_div">
-                    <div className="graph_info">
-                        <h3 className="graph_title">Current link</h3>
-                        <div>{currentLinkInfo[0].from_address}</div>
-                    </div>
-                    <div className="graph_settings">
-                        <h3 className="graph_title">Graph customization</h3>
-                    </div>
-                </div>
-                <div className="graph_div">
-                    <h1
-                        className="graph_title"
-                        style={{ position: "absolute" }}
-                    >
-                        Currently viewing: Transactions
-                    </h1>
-                    <Graph
-                        id="graph-id" // id is mandatory
-                        data={data}
-                        config={myConfig}
-                        onClickNode={onClickNode}
-                        onClickLink={onClickLink}
-                    />
-                </div>
+    function handleClick() {
+        setTabDown(!tabDown)
+    }
+
+    return (
+        <div className="root">
+            <div className="graph_info">
+                <h3 className="graph_title">Current link</h3>
             </div>
-        )
-    } catch {}
+            <div
+                className="tab_div"
+                style={{ bottom: tabDown ? "64px" : window.innerHeight - 64 }}
+                onClick={() => handleClick()}
+            >
+                <GraphTab />
+            </div>
+            <Graph
+                id="graph-id" // id is mandatory
+                data={data}
+                config={myConfig}
+                onClickNode={onClickNode}
+                onClickLink={onClickLink}
+            />
+        </div>
+
+        // <div className="root">
+        //     <div className="graph_div" style={{ width: 580, height: 800 }}>
+        //         <h1 className="graph_title">Graph configuration</h1>
+        //     </div>
+        //     <div className="info_div">
+        //         <div className="graph_info">
+        //             <h3 className="graph_title">Current link</h3>
+        //         </div>
+        //         <div className="graph_settings">
+        //             <h3 className="graph_title">Graph customization</h3>
+        //         </div>
+        //     </div>
+        //     <div className="graph_div">
+        //         <h1 className="graph_title" style={{ position: "absolute" }}>
+        //             Currently viewing: Transactions
+        //         </h1>
+        //         <Graph
+        //             id="graph-id" // id is mandatory
+        //             data={data}
+        //             config={myConfig}
+        //             onClickNode={onClickNode}
+        //             onClickLink={onClickLink}
+        //         />
+        //     </div>
+        // </div>
+    )
 }
 
 export default Mainpage

@@ -7,7 +7,7 @@ const ConnectWalletButton = ({
     address,
 }) => {
     return (
-        <div>
+        <>
             {address && !loading ? (
                 <button
                     onClick={onPressLogout}
@@ -30,7 +30,7 @@ const ConnectWalletButton = ({
                     Connect Wallet
                 </button>
             )}
-        </div>
+        </>
     )
 }
 

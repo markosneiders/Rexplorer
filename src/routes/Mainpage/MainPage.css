@@ -2,7 +2,8 @@
     background-color: #222;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    position: relative;
 }
 .graph_div {
     background-color: rgb(255, 255, 255, 0.05);
@@ -27,12 +28,15 @@
     align-items: center;
 }
 .graph_info {
-    background-color: rgb(255, 255, 255, 0.05);
+    background-color: #222;
     width: 360px;
     height: 380px;
     border: 3px solid #ff3f81;
     border-radius: 8px;
     box-shadow: 5px 5px 15px 5px #000000;
+    position: absolute;
+    align-self: flex-end;
+    left: 0px;
 }
 .graph_settings {
     background-color: rgb(255, 255, 255, 0.05);
@@ -57,4 +61,11 @@
     border-bottom-right-radius: 8px;
     font-weight: 500;
     box-shadow: 5px 5px 5px 1px #212121;
+}
+.tab_div {
+    position: absolute;
+    width: 40%;
+}
+iframe {
+    pointer-events: none;
 }
