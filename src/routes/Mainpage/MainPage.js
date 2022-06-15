@@ -4,7 +4,8 @@ import { Graph } from "react-d3-graph"
 import axios from "axios"
 import { useState, useEffect } from "react"
 
-const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
+//const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
+const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
 
 const Mainpage = () => {
     const [data, setData] = useState({
@@ -12,10 +13,11 @@ const Mainpage = () => {
         links: [],
         focusedNodeId: "nodeIdToTriggerZoomAnimation",
     })
-    const [currentNode, setCurrentNode] = useState({
-        name: "",
-    })
-
+    const graphLinks = []
+    const [linkInfo, setLinkInfo] = useState({})
+    const [currentLinkInfo, setCurrentLinkInfo] = useState(
+        "Select link to explore"
+    )
     const myConfig = {
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
@@ -73,7 +75,7 @@ const Mainpage = () => {
             opacity: 0.5,
             renderLabel: false,
             semanticStrokeWidth: true,
-            strokeWidth: 1,
+            strokeWidth: 5,
             markerHeight: 6,
             markerWidth: 6,
             strokeDasharray: 0,
@@ -82,15 +84,37 @@ const Mainpage = () => {
             type: "CURVE_SMOOTH",
         },
     }
+    const formatAddress = (address) => {
+        return `${address.slice(0, 6)}...${address.slice(-4)}`
+    }
 
     const onClickNode = function (nodeId) {
         window.alert(`Clicked node ${nodeId}`)
     }
 
     const onClickLink = function (source, target) {
-        window.alert(`Clicked link between ${source} and ${target}`)
+        getLinkByAddress(source, target)
     }
-
+    const getLinkByAddress = (address1, address2) => {
+        const allId = []
+        const returnData = []
+        const inputId = formatAddress(address1) + formatAddress(address2)
+        for (var i = 0; i < linkInfo.length; i++) {
+            allId.push({
+                id:
+                    formatAddress(linkInfo[i].from_address) +
+                    formatAddress(linkInfo[i].to_address),
+                index: i,
+            })
+        }
+        const filtered = allId.filter((trans) => {
+            return trans.id === inputId
+        })
+        for (var i = 0; i < filtered.length; i++) {
+            returnData[i] = linkInfo[filtered[i].index]
+        }
+        setCurrentLinkInfo(returnData)
+    }
     //Generates a list of all nodes invovled with transactions (without duplicates)
     const nodeIdGen = (item) => {
         const data1 = []
@@ -105,26 +129,21 @@ const Mainpage = () => {
         return data1
     }
 
-    // Removes duplicate transactions for graph pourposes (react freaks out about objects having the same keys)
     const dupeLinkRemoval = (item) => {
         const data1 = []
-        const data2 = []
         for (var i = 0; i < item.length; i++) {
             if (
-                data1.indexOf(item[i].from_address + item[i].to_address) >
-                    -1 !==
-                true
+                data1.indexOf(item[i].from_address + item[i].to_address) == -1
             ) {
                 data1.push(item[i].from_address + item[i].to_address)
             }
         }
         for (var i = 0; i < data1.length; i++) {
-            data2.push({
-                from_address: data1[i].slice(0, 42),
-                to_address: data1[i].slice(-42),
+            graphLinks.push({
+                from_address: formatAddress(data1[i].slice(0, 42)),
+                to_address: formatAddress(data1[i].slice(-42)),
             })
         }
-        return data2
     }
 
     const getData = async () => {
@@ -136,26 +155,20 @@ const Mainpage = () => {
             const no_null_response = response.data.data.items.filter(
                 (item) => item.to_address !== null
             )
+            await setLinkInfo(no_null_response)
 
             // Calls functons and creates a list of nodes and links without duplicates to pass on to the graph
             const nodes = await nodeIdGen(no_null_response)
-            const links = await dupeLinkRemoval(no_null_response)
+            dupeLinkRemoval(no_null_response)
+            console.log(no_null_response)
 
             await setData({
                 nodes: nodes.map((item) => ({
                     id: `${item.slice(0, 6)}...${item.slice(-4)}`,
-                    symbolType: item == graphAddress ? "square" : "",
                 })),
-                links: [],
-                links: links.map((item) => ({
-                    source: `${item.from_address.slice(
-                        0,
-                        6
-                    )}...${item.from_address.slice(-4)}`,
-                    target: `${item.to_address.slice(
-                        0,
-                        6
-                    )}...${item.to_address.slice(-4)}`,
+                links: graphLinks.map((item) => ({
+                    source: item.from_address,
+                    target: item.to_address,
                 })),
                 focusedNodeId: "nodeIdToTriggerZoomAnimation",
             })
@@ -167,8 +180,6 @@ const Mainpage = () => {
         getData()
     }, [])
 
-    // the graph configuration, just override the ones you need
-
     try {
         return (
             <div className="root">
@@ -177,7 +188,8 @@ const Mainpage = () => {
                 </div>
                 <div className="info_div">
                     <div className="graph_info">
-                        <h3 className="graph_title">Current node</h3>
+                        <h3 className="graph_title">Current link</h3>
+                        <div>{currentLinkInfo[0].from_address}</div>
                     </div>
                     <div className="graph_settings">
                         <h3 className="graph_title">Graph customization</h3>
