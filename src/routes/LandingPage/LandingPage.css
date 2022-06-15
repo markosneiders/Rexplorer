@@ -4,21 +4,43 @@
     width: 100%;
     justify-content: center;
     align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .mainScreen__authBox {
-    background-color: #324158;
-    opacity: 0.8;
-    height: 300px;
-    width: 200px;
+    background-color: #181b1f;
+    height: 130px;
+    width: 418px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 250px;
 }
 
-.metamaskButton {
-    height: 100%;
+.connectWalletToView {
     width: 100%;
+    font-size: small;
+    /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #181b1f;
+    color: white;
+    flex: 1;
+}
+.wallets {
+    background-color: #181b1f;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+iframe {
+    pointer-events: none;
 }

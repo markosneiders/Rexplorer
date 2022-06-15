@@ -14,6 +14,9 @@ const LandingPage = () => {
     const vantaRef = useRef(null)
 
     useEffect(() => {
+        if (address != "") {
+            window.location.href = "/MainPage"
+        }
         if (!vantaEffect) {
             setVantaEffect(
                 NET({
@@ -34,7 +37,7 @@ const LandingPage = () => {
         return () => {
             if (vantaEffect) vantaEffect.destroy()
         }
-    }, [vantaEffect])
+    }, [vantaEffect, address])
 
     const onPressConnect = async () => {
         setLoading(true)
@@ -62,12 +65,31 @@ const LandingPage = () => {
                 <div>
                     <Header />
                     <div className="mainScreen">
-                        <ConnectWalletButton
-                            onPressConnect={onPressConnect}
-                            onPressLogout={onPressLogout}
-                            loading={loading}
-                            address={address}
-                        />
+                        <div className="mainScreen__authBox">
+                            <div className="connectWalletToView">
+                                <h3
+                                    style={{
+                                        height: "fit-content",
+                                        width: "100%",
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        fontWeight: "500",
+                                        marginLeft: "20px",
+                                        marginTop: "25px",
+                                    }}
+                                >
+                                    Connect a wallet
+                                </h3>
+                            </div>
+                            <div className="wallets">
+                                <ConnectWalletButton
+                                    onPressConnect={onPressConnect}
+                                    onPressLogout={onPressLogout}
+                                    loading={loading}
+                                    address={address}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

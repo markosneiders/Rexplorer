@@ -1,4 +1,5 @@
 import styles from "./ConnectWallet.module.css"
+import Metamask from "../../assets/images/metamask.png"
 
 const ConnectWalletButton = ({
     onPressLogout,
@@ -7,7 +8,7 @@ const ConnectWalletButton = ({
     address,
 }) => {
     return (
-        <div>
+        <>
             {address && !loading ? (
                 <button
                     onClick={onPressLogout}
@@ -27,10 +28,17 @@ const ConnectWalletButton = ({
                     onClick={onPressConnect}
                     className={styles["connect-wallet"]}
                 >
-                    Connect Wallet
+                    <p style={{ height: "fit-content", width: "fit-content" }}>
+                        Metamask
+                    </p>
+                    <img
+                        src={Metamask}
+                        alt="mySvgImage"
+                        style={{ width: "auto", height: "100%" }}
+                    />
                 </button>
             )}
-        </div>
+        </>
     )
 }
 
