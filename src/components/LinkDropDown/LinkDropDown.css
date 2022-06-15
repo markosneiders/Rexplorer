@@ -1,0 +1,58 @@
+.LinkDropDown__header {
+    background-color: #333;
+    border: 2px solid #ff3f81;
+    border-radius: 8px;
+    height: 32px;
+    width: 98%;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ff3f81;
+}
+.LinkDropDown__header_down {
+    background-color: #333;
+    border: 2px solid #ff3f81;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    height: 32px;
+    width: 98%;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ff3f81;
+}
+.LinkDropDown__main {
+    width: 95%;
+}
+.LinkDropDown__body {
+    height: fit-content;
+    width: 98%;
+    border: 2px solid #ff3f81;
+    border-top: 0px solid #ff3f81;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.LinkDropDown__body_ul {
+    padding: 8px;
+}
+.LinkDropDown__body_ul_title {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ff3f81;
+    text-align: left;
+}
+.LinkDropDown__body_ul_text {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: right;
+    padding-right: 16px;
+}
+.LinkDropDown__body_li {
+    display: flex;
+    flex-direction: row;
+}

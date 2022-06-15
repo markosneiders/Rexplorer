@@ -5,17 +5,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
 
 const GraphTab = () => {
-    // const [height, setHeight] = useState(`${12}%`)
     const [position, setPosition] = useState(true)
 
     function handleClick() {
-        // {
-        //     height == `${12}%` ? setHeight(`${100}%`) : setHeight(`${12}%`)
-        // }
         setPosition(!position)
     }
     return (
-        <div className="header">
+        <div className="graphtab">
             <div className="menu"></div>
             <div className="logo-container" onClick={() => handleClick()}>
                 <img className="logo" src={title} alt="Rexplorer" />

@@ -1,10 +1,10 @@
-.header {
+.header__header {
     height: 96px;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-.logo-container {
+.header__logo-container {
     background-color: rgb(0, 0, 0, 0.6);
     display: flex;
     flex-direction: row;
@@ -15,7 +15,7 @@
     border-bottom-left-radius: 32px;
     border-bottom-right-radius: 32px;
 }
-.logo {
+.header__logo {
     width: auto;
-    height: 85%;
+    height: 64px;
 }

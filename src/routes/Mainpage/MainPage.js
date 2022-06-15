@@ -4,10 +4,11 @@ import { Graph } from "react-d3-graph"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import GraphTab from "../../components/GraphTab/Graphtab"
+import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
 
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
-//const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
-const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
+//const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 
 const Mainpage = () => {
     const [data, setData] = useState({
@@ -17,7 +18,7 @@ const Mainpage = () => {
     })
     const graphLinks = []
     const [linkInfo, setLinkInfo] = useState({})
-    const [currentLinkInfo, setCurrentLinkInfo] = useState()
+    const [currentLinkInfo, setCurrentLinkInfo] = useState([])
     const [tabDown, setTabDown] = useState(false)
     const myConfig = {
         automaticRearrangeAfterDropNode: false,
@@ -32,7 +33,6 @@ const Mainpage = () => {
         linkHighlightBehavior: true,
         maxZoom: 8,
         minZoom: 0.1,
-        initialZoom: 0.5,
         nodeHighlightBehavior: true,
         panAndZoom: false,
         staticGraph: false,
@@ -153,6 +153,7 @@ const Mainpage = () => {
             const response = await axios.get(
                 `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}`
             )
+            console.log(response)
             //removes null from Covalent results
             const no_null_response = response.data.data.items.filter(
                 (item) => item.to_address !== null
@@ -185,53 +186,33 @@ const Mainpage = () => {
     function handleClick() {
         setTabDown(!tabDown)
     }
+    const dropDowns = currentLinkInfo.map((item) => (
+        <LinkDropDown data={item} />
+    ))
 
     return (
         <div className="root">
             <div className="graph_info">
                 <h3 className="graph_title">Current link</h3>
+                <div className="drop_down_div">{dropDowns}</div>
             </div>
             <div
                 className="tab_div"
-                style={{ bottom: tabDown ? "64px" : window.innerHeight - 64 }}
+                style={{
+                    bottom: tabDown ? "64px" : window.innerHeight - 64,
+                }}
                 onClick={() => handleClick()}
             >
                 <GraphTab />
             </div>
             <Graph
-                id="graph-id" // id is mandatory
+                id="graph-id"
                 data={data}
                 config={myConfig}
                 onClickNode={onClickNode}
                 onClickLink={onClickLink}
             />
         </div>
-
-        // <div className="root">
-        //     <div className="graph_div" style={{ width: 580, height: 800 }}>
-        //         <h1 className="graph_title">Graph configuration</h1>
-        //     </div>
-        //     <div className="info_div">
-        //         <div className="graph_info">
-        //             <h3 className="graph_title">Current link</h3>
-        //         </div>
-        //         <div className="graph_settings">
-        //             <h3 className="graph_title">Graph customization</h3>
-        //         </div>
-        //     </div>
-        //     <div className="graph_div">
-        //         <h1 className="graph_title" style={{ position: "absolute" }}>
-        //             Currently viewing: Transactions
-        //         </h1>
-        //         <Graph
-        //             id="graph-id" // id is mandatory
-        //             data={data}
-        //             config={myConfig}
-        //             onClickNode={onClickNode}
-        //             onClickLink={onClickLink}
-        //         />
-        //     </div>
-        // </div>
     )
 }
 

@@ -4,9 +4,9 @@ import title from "../../assets/images/Title.png"
 
 const Header = () => {
     return (
-        <div className="header">
-            <div className="logo-container">
-                <img className="logo" src={title} alt="Rexplorer" />
+        <div className="header__header">
+            <div className="header__logo-container">
+                <img className="header__logo" src={title} alt="Rexplorer" />
             </div>
         </div>
     )
