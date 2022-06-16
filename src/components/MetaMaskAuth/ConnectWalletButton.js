@@ -1,11 +1,12 @@
 import styles from "./ConnectWallet.module.css"
-import Metamask from "../../assets/images/metamask.png"
 
 const ConnectWalletButton = ({
     onPressLogout,
     onPressConnect,
     loading,
     address,
+    name,
+    image,
 }) => {
     return (
         <>
@@ -28,11 +29,19 @@ const ConnectWalletButton = ({
                     onClick={onPressConnect}
                     className={styles["connect-wallet"]}
                 >
-                    <p style={{ height: "fit-content", width: "fit-content" }}>
-                        Metamask
+                    <p
+                        style={{
+                            height: "fit-content",
+                            width: "fit-content",
+                            fontFamily: ["Inter custom", "sans - serif"],
+                            fontWeight: "lighter",
+                            fontSize: "16px",
+                        }}
+                    >
+                        {name}
                     </p>
                     <img
-                        src={Metamask}
+                        src={image}
                         alt="mySvgImage"
                         style={{ width: "auto", height: "100%" }}
                     />

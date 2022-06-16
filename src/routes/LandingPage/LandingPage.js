@@ -5,6 +5,8 @@ import "./LandingPage.css"
 import NET from "vanta/dist/vanta.net.min"
 import Web3 from "web3"
 import * as THREE from "three"
+import Metamask from "../../assets/images/metamask.png"
+import Unstoppable from "../../assets/images/unstoppable.png"
 
 const LandingPage = () => {
     const [loading, setLoading] = useState(false)
@@ -67,19 +69,18 @@ const LandingPage = () => {
                     <div className="mainScreen">
                         <div className="mainScreen__authBox">
                             <div className="connectWalletToView">
-                                <h3
+                                <p
                                     style={{
                                         height: "fit-content",
-                                        width: "100%",
+                                        marginLeft: "16px",
                                         display: "flex",
                                         justifyContent: "start",
-                                        fontWeight: "500",
-                                        marginLeft: "20px",
-                                        marginTop: "25px",
+                                        fontWeight: "light",
+                                        fontSize: 16,
                                     }}
                                 >
                                     Connect a wallet
-                                </h3>
+                                </p>
                             </div>
                             <div className="wallets">
                                 <ConnectWalletButton
@@ -87,6 +88,16 @@ const LandingPage = () => {
                                     onPressLogout={onPressLogout}
                                     loading={loading}
                                     address={address}
+                                    name={"MetaMask"}
+                                    image={Metamask}
+                                />
+                                <ConnectWalletButton
+                                    onPressConnect={{}}
+                                    onPressLogout={{}}
+                                    // loading={{}}
+                                    // address={{}}
+                                    name={"Unstoppable"}
+                                    image={Unstoppable}
                                 />
                             </div>
                         </div>
