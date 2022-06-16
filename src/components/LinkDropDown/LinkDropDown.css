@@ -11,6 +11,8 @@
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     color: #ff3f81;
+    font-weight: 600;
+    font-size: large;
 }
 .LinkDropDown__header_down {
     background-color: #333;
@@ -26,6 +28,8 @@
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     color: #ff3f81;
+    font-weight: 600;
+    font-size: large;
 }
 .LinkDropDown__main {
     width: 95%;

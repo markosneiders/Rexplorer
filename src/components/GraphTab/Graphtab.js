@@ -4,15 +4,40 @@ import title from "../../assets/images/Title.png"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
 
-const GraphTab = () => {
+const GraphTab = (props) => {
     const [position, setPosition] = useState(true)
+    const [address, setAddress] = useState(props.address)
 
     function handleClick() {
         setPosition(!position)
+        props.click()
+        props.setAddress(address)
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        props.setAddress(address)
+        handleClick()
     }
     return (
         <div className="graphtab">
-            <div className="menu"></div>
+            <div className="menu">
+                <form
+                    onSubmit={handleSubmit}
+                    onAbort={() => props.setAddress(address)}
+                    className="GraphTab__form"
+                >
+                    <label>
+                        Address:
+                        <input
+                            className="GraphTab__input"
+                            type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </label>
+                </form>
+            </div>
             <div className="logo-container" onClick={() => handleClick()}>
                 <img className="logo" src={title} alt="Rexplorer" />
                 {position ? (

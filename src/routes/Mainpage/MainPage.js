@@ -7,7 +7,7 @@ import GraphTab from "../../components/GraphTab/Graphtab"
 import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
 
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
-const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
+//const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
 //const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 
 const Mainpage = () => {
@@ -20,6 +20,10 @@ const Mainpage = () => {
     const [linkInfo, setLinkInfo] = useState({})
     const [currentLinkInfo, setCurrentLinkInfo] = useState([])
     const [tabDown, setTabDown] = useState(false)
+
+    const [graphAddress, setGraphAddress] = useState(
+        "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
+    )
     const myConfig = {
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
@@ -151,7 +155,7 @@ const Mainpage = () => {
     const getData = async () => {
         try {
             const response = await axios.get(
-                `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}`
+                `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=100`
             )
             console.log(response)
             //removes null from Covalent results
@@ -181,7 +185,8 @@ const Mainpage = () => {
     }
     useEffect(() => {
         getData()
-    }, [])
+        console.log("GetData")
+    }, [graphAddress])
 
     function handleClick() {
         setTabDown(!tabDown)
@@ -201,9 +206,12 @@ const Mainpage = () => {
                 style={{
                     bottom: tabDown ? "64px" : window.innerHeight - 64,
                 }}
-                onClick={() => handleClick()}
             >
-                <GraphTab />
+                <GraphTab
+                    click={handleClick}
+                    address={graphAddress}
+                    setAddress={setGraphAddress}
+                />
             </div>
             <Graph
                 id="graph-id"

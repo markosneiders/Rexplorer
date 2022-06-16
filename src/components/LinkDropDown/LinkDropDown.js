@@ -25,7 +25,10 @@ const LinkDropDown = (props) => {
                         fontSize: 40,
                     }}
                 />
-                {props.data.block_signed_at}
+                {`${props.data.block_signed_at.slice(
+                    0,
+                    10
+                )} ${props.data.block_signed_at.slice(11, 19)}`}
             </div>
             <div className="LinkDropDown__body">
                 <ul className="LinkDropDown__body_ul">
@@ -79,7 +82,10 @@ const LinkDropDown = (props) => {
                         fontSize: 40,
                     }}
                 />
-                {props.data.block_signed_at}
+                {`${props.data.block_signed_at.slice(
+                    0,
+                    10
+                )} ${props.data.block_signed_at.slice(11, 19)}`}
             </div>
         </div>
     )
