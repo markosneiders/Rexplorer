@@ -18,6 +18,20 @@
     bottom: 16px;
     overflow-y: scroll;
 }
+
+.graph_info::-webkit-scrollbar {
+    width: 0.3em;
+}
+
+.graph_info::-webkit-scrollbar-track {
+    box-shadow: "inset 0 0 6px #000";
+}
+
+.graph_info::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 20px;
+}
+
 .graph_title {
     background-color: rgb(60, 60, 60);
     height: min-content;
