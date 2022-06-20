@@ -13,7 +13,10 @@
     border-radius: 10px;
     padding: 0.6rem 1rem;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-left: 16px;
+    margin-right: 16px;
+    font-size: 16px;
+    margin-bottom: 8px;
 }
 
 .connect-wallet:hover {

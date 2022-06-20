@@ -22,7 +22,7 @@ const LinkDropDown = (props) => {
                 <ArrowDropUpIcon
                     sx={{
                         color: "#ff3f81",
-                        fontSize: 40,
+                        fontSize: 50,
                     }}
                 />
                 {`${props.data.block_signed_at.slice(
@@ -79,7 +79,7 @@ const LinkDropDown = (props) => {
                 <ArrowDropDownIcon
                     sx={{
                         color: "#ff3f81",
-                        fontSize: 40,
+                        fontSize: 50,
                     }}
                 />
                 {`${props.data.block_signed_at.slice(

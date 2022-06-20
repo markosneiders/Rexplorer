@@ -7,11 +7,11 @@
 }
 .graph_info {
     background-color: #222;
-    width: 360px;
+    width: 300px;
     height: 380px;
-    border: 3px solid #ff3f81;
+    border: 1px solid #444;
     border-radius: 8px;
-    box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 2px 2px 15px 3px #000000;
     position: absolute;
     align-self: flex-end;
     left: 16px;
@@ -28,26 +28,22 @@
 }
 
 .graph_info::-webkit-scrollbar-thumb {
-    background-color: #fff;
+    background-color: #666;
     border-radius: 20px;
 }
 
 .graph_title {
-    background-color: rgb(60, 60, 60);
     height: min-content;
-    width: fit-content;
-    color: #ff3f81;
+    width: 100%;
+    color: white;
     font-family: Arial, Helvetica, sans-serif;
     padding: 8px;
-    border-bottom: 3px solid #ff3f81;
-    border-right: 3px solid #ff3f81;
-    border-bottom-right-radius: 8px;
-    font-weight: 500;
-    box-shadow: 5px 5px 5px 1px #212121;
+    font-size: 32px;
+    font-weight: "bold";
 }
 .tab_div {
     position: absolute;
-    width: 40%;
+    width: 10%;
 }
 .drop_down_div {
     display: flex;

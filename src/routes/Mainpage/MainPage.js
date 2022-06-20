@@ -198,7 +198,7 @@ const Mainpage = () => {
     return (
         <div className="root">
             <div className="graph_info">
-                <h3 className="graph_title">Current link</h3>
+                <h3 className="graph_title">Link transactions</h3>
                 <div className="drop_down_div">{dropDowns}</div>
             </div>
             <div

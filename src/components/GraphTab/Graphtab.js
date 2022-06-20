@@ -38,6 +38,7 @@ const GraphTab = (props) => {
                     </label>
                 </form>
             </div>
+
             <div className="logo-container" onClick={() => handleClick()}>
                 <img className="logo" src={title} alt="Rexplorer" />
                 {position ? (

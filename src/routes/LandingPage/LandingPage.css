@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 250px;
+    border: 1px solid #444;
 }
 
 .connectWalletToView {
@@ -37,7 +38,6 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    height: 373px;
 }
 
 iframe {

@@ -75,8 +75,10 @@ const LandingPage = () => {
                                         marginLeft: "16px",
                                         display: "flex",
                                         justifyContent: "start",
-                                        fontWeight: "light",
-                                        fontSize: 16,
+                                        fontWeight: "bold",
+                                        marginLeft: "16px",
+                                        marginTop: "16px",
+                                        fontSize: "large",
                                     }}
                                 >
                                     Connect a wallet
