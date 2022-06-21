@@ -16,7 +16,7 @@ const LandingPage = () => {
     const vantaRef = useRef(null)
 
     useEffect(() => {
-        if (address != "") {
+        if (address !== "") {
             window.location.href = "/MainPage"
         }
         if (!vantaEffect) {
@@ -72,7 +72,6 @@ const LandingPage = () => {
                                 <p
                                     style={{
                                         height: "fit-content",
-                                        marginLeft: "16px",
                                         display: "flex",
                                         justifyContent: "start",
                                         fontWeight: "bold",
@@ -94,8 +93,8 @@ const LandingPage = () => {
                                     image={Metamask}
                                 />
                                 <ConnectWalletButton
-                                    onPressConnect={{}}
-                                    onPressLogout={{}}
+                                    // onPressConnect={}
+                                    // onPressLogout={}
                                     // loading={{}}
                                     // address={{}}
                                     name={"Unstoppable"}

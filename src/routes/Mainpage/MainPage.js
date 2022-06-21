@@ -2,6 +2,7 @@ import React from "react"
 import "./MainPage.css"
 import { Graph } from "react-d3-graph"
 import axios from "axios"
+import { ethers } from "ethers"
 import { useState, useEffect } from "react"
 import GraphTab from "../../components/GraphTab/Graphtab"
 import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
@@ -21,9 +22,11 @@ const Mainpage = () => {
     const [currentLinkInfo, setCurrentLinkInfo] = useState([])
     const [tabDown, setTabDown] = useState(false)
 
-    const [graphAddress, setGraphAddress] = useState(
-        "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
-    )
+    const [currentAccount, setCurrentAccount] = useState("")
+    const [userAddress, setUserAddress] = useState("")
+
+    const [graphAddress, setGraphAddress] = useState("")
+
     const myConfig = {
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
@@ -125,9 +128,10 @@ const Mainpage = () => {
     const nodeIdGen = (item) => {
         const data1 = []
         for (var i = 0; i < item.length; i++) {
+            // eslint-disable-next-line
             if (data1.indexOf(item[i].from_address) > -1 !== true) {
                 data1.push(item[i].from_address)
-            }
+            } // eslint-disable-next-line
             if (data1.indexOf(item[i].to_address) > -1 !== true) {
                 data1.push(item[i].to_address)
             }
@@ -139,7 +143,7 @@ const Mainpage = () => {
         const data1 = []
         for (var i = 0; i < item.length; i++) {
             if (
-                data1.indexOf(item[i].from_address + item[i].to_address) == -1
+                data1.indexOf(item[i].from_address + item[i].to_address) === -1
             ) {
                 data1.push(item[i].from_address + item[i].to_address)
             }
@@ -153,10 +157,26 @@ const Mainpage = () => {
     }
 
     const getData = async () => {
+        const { ethereum } = window
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+
+        const addr = await signer.getAddress()
+
+        let response
         try {
-            const response = await axios.get(
-                `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=100`
-            )
+            if (graphAddress === "") {
+                response = await axios.get(
+                    `https://api.covalenthq.com/v1/1/address/${addr.toString()}/transactions_v2/?key=${
+                        process.env.REACT_APP_COVALENT_API_KEY
+                    }&page-size=100`
+                )
+            } else {
+                response = await axios.get(
+                    `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=100`
+                )
+            }
+
             console.log(response)
             //removes null from Covalent results
             const no_null_response = response.data.data.items.filter(
@@ -183,10 +203,62 @@ const Mainpage = () => {
             console.error(err)
         }
     }
+
+    // const onNewSigner = async () => {
+    //     let addr
+    //     if (window.ethereum) {
+    //         const provider = new ethers.providers.Web3Provider(window.ethereum)
+    //         const signer = provider.getSigner()
+
+    //         addr = await signer.getAddress()
+
+    //         setUserAddress(addr.toString())
+    //     }
+    // }
+
+    const detailsOn = async () => {
+        const { ethereum } = window
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+
+        const addr = await signer.getAddress()
+
+        setUserAddress(addr.toString())
+    }
+
+    const checkIfWalletIsConnected = async () => {
+        try {
+            const { ethereum } = window
+
+            if (!ethereum) {
+                console.log("Use Metamask!")
+            } else {
+                console.log("Ethereum object found", ethereum)
+                detailsOn()
+            }
+
+            const accounts = await ethereum.request({ method: "eth_accounts" })
+
+            if (accounts !== 0) {
+                const account = accounts[0]
+                console.log("Found an authorized account ", account)
+                setCurrentAccount(account)
+                detailsOn()
+            } else {
+                console.log("Could not find an authorized account")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getData()
         console.log("GetData")
-    }, [graphAddress])
+
+        checkIfWalletIsConnected()
+        // eslint-disable-next-line
+    }, [graphAddress, window.ethereum])
 
     function handleClick() {
         setTabDown(!tabDown)
@@ -197,6 +269,29 @@ const Mainpage = () => {
 
     return (
         <div className="root">
+            <div className="graph_address">
+                <h3 className="graph_address__text">Currently Viewing</h3>
+                {graphAddress === "" ? (
+                    <>
+                        <h3 className="graph_address__text">
+                            {formatAddress(userAddress)}
+                        </h3>
+                        <h4 className="graph_address__text">(Your Address)</h4>
+                    </>
+                ) : (
+                    <>
+                        <h3 className="graph_address__text">
+                            {formatAddress(graphAddress)}
+                        </h3>
+                        <h4
+                            className="graph_address__goBack"
+                            onClick={() => setGraphAddress("")}
+                        >
+                            Go Back
+                        </h4>
+                    </>
+                )}
+            </div>
             <div className="graph_info">
                 <h3 className="graph_title">Link transactions</h3>
                 <div className="drop_down_div">{dropDowns}</div>
