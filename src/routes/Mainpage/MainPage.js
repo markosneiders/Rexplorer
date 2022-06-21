@@ -21,10 +21,7 @@ const Mainpage = () => {
     const [linkInfo, setLinkInfo] = useState({})
     const [currentLinkInfo, setCurrentLinkInfo] = useState([])
     const [tabDown, setTabDown] = useState(false)
-
-    const [currentAccount, setCurrentAccount] = useState("")
     const [userAddress, setUserAddress] = useState("")
-
     const [graphAddress, setGraphAddress] = useState("")
 
     const myConfig = {
@@ -204,18 +201,6 @@ const Mainpage = () => {
         }
     }
 
-    // const onNewSigner = async () => {
-    //     let addr
-    //     if (window.ethereum) {
-    //         const provider = new ethers.providers.Web3Provider(window.ethereum)
-    //         const signer = provider.getSigner()
-
-    //         addr = await signer.getAddress()
-
-    //         setUserAddress(addr.toString())
-    //     }
-    // }
-
     const detailsOn = async () => {
         const { ethereum } = window
         const provider = new ethers.providers.Web3Provider(ethereum)
@@ -242,7 +227,6 @@ const Mainpage = () => {
             if (accounts !== 0) {
                 const account = accounts[0]
                 console.log("Found an authorized account ", account)
-                setCurrentAccount(account)
                 detailsOn()
             } else {
                 console.log("Could not find an authorized account")

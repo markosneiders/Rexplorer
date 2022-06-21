@@ -73,6 +73,7 @@
     padding: 3px;
     height: fit-content;
     width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .graph_address__goBack {
     display: flex;
@@ -85,6 +86,7 @@
     border-radius: 8px;
     padding: 6px;
     background-color: #444;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .graph_address__goBack:hover {
