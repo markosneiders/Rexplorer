@@ -21,22 +21,27 @@ const GraphTab = (props) => {
     }
     return (
         <div className="graphtab">
-            <div className="menu">
-                <form
-                    onSubmit={handleSubmit}
-                    onAbort={() => props.setAddress(address)}
-                    className="GraphTab__form"
-                >
-                    <label>
-                        Address:
-                        <input
-                            className="GraphTab__input"
-                            type="text"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                        />
-                    </label>
-                </form>
+            <div className="GraphTab__menu_back">
+                <div className="GraphTab__menu">
+                    <h3 className="GraphTab__menu_title">Graph settings</h3>
+                    <div className="GraphTab__menu_container">
+                        <form
+                            onSubmit={handleSubmit}
+                            onAbort={() => props.setAddress(address)}
+                            className="GraphTab__form"
+                        >
+                            <label className="GraphTab__label">
+                                Address:
+                                <input
+                                    className="GraphTab__input"
+                                    type="text"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                />
+                            </label>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <div className="logo-container" onClick={() => handleClick()}>

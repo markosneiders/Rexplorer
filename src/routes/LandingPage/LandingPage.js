@@ -75,7 +75,6 @@ const LandingPage = () => {
                                         display: "flex",
                                         justifyContent: "start",
                                         fontWeight: "bold",
-                                        marginLeft: "16px",
                                         marginTop: "16px",
                                         fontSize: "large",
                                     }}
