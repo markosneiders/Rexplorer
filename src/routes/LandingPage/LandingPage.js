@@ -77,46 +77,42 @@ const LandingPage = () => {
     const onPressLogout = () => setAddress("")
 
     return (
-        <div className="root">
-            <div ref={vantaRef}>
-                <div>
-                    <Header />
-                    <div className="mainScreen">
-                        <div className="mainScreen__authBox">
-                            <div className="connectWalletToView">
-                                <p
-                                    style={{
-                                        height: "fit-content",
-                                        display: "flex",
-                                        justifyContent: "start",
-                                        fontWeight: "bold",
-                                        marginTop: "16px",
-                                        fontSize: "large",
-                                        marginLeft: "16px",
-                                    }}
-                                >
-                                    Connect a wallet
-                                </p>
-                            </div>
-                            <div className="wallets">
-                                <ConnectWalletButton
-                                    onPressConnect={onPressConnect}
-                                    onPressLogout={onPressLogout}
-                                    loading={loading}
-                                    address={address}
-                                    name={"MetaMask"}
-                                    image={Metamask}
-                                />
-                                <ConnectWalletButton
-                                    onPressConnect={login}
-                                    // onPressLogout={}
-                                    // loading={{}}
-                                    // address={{}}
-                                    name={"Unstoppable"}
-                                    image={Unstoppable}
-                                />
-                            </div>
-                        </div>
+        <div ref={vantaRef}>
+            <Header />
+            <div className="LandingPage">
+                <div className="LandingPage__authBox">
+                    <div className="andingPage__authBox-header">
+                        <p
+                            style={{
+                                height: "fit-content",
+                                display: "flex",
+                                justifyContent: "start",
+                                fontWeight: "bold",
+                                marginTop: "16px",
+                                fontSize: "large",
+                                marginLeft: "16px",
+                            }}
+                        >
+                            Connect a wallet
+                        </p>
+                    </div>
+                    <div className="LandingPage__authBox-wallets">
+                        <ConnectWalletButton
+                            onPressConnect={onPressConnect}
+                            onPressLogout={onPressLogout}
+                            loading={loading}
+                            address={address}
+                            name={"MetaMask"}
+                            image={Metamask}
+                        />
+                        <ConnectWalletButton
+                            onPressConnect={login}
+                            // onPressLogout={}
+                            // loading={{}}
+                            // address={{}}
+                            name={"Unstoppable"}
+                            image={Unstoppable}
+                        />
                     </div>
                 </div>
             </div>

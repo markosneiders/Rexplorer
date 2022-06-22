@@ -9,7 +9,7 @@ import Mainpage from "./routes/Mainpage/MainPage"
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <BrowserRouter>
-        <Routes>
+        <Routes className="index">
             <Route path="/" element={<LandingPage />} />
             <Route path="MainPage" element={<Mainpage />} />
         </Routes>

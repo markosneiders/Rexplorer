@@ -12,19 +12,17 @@ import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
 //const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 
 const Mainpage = () => {
-    const [data, setData] = useState({
-        nodes: [{ id: "Loading" }],
-        links: [],
-        focusedNodeId: "nodeIdToTriggerZoomAnimation",
-    })
+    const [data, setData] = useState({})
     const graphLinks = []
     const [linkInfo, setLinkInfo] = useState({})
     const [currentLinkInfo, setCurrentLinkInfo] = useState([])
     const [tabDown, setTabDown] = useState(false)
     const [userAddress, setUserAddress] = useState("")
     const [graphAddress, setGraphAddress] = useState("")
-
+    const [chain, setChain] = useState(1)
+    const [loading, setLoading] = useState(true)
     const [graphConfig, setGraphConfig] = useState({
+        pageSize: 1000,
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
         directed: false,
@@ -45,7 +43,7 @@ const Mainpage = () => {
         d3: {
             alphaTarget: 1,
             gravity: -250,
-            linkLength: 100,
+            linkLength: 1000,
             linkStrength: 1,
             disableLinkForce: false,
         },
@@ -155,10 +153,11 @@ const Mainpage = () => {
     }
 
     const getData = async () => {
+        setLoading(true)
         let response
         try {
             response = await axios.get(
-                `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=100`
+                `https://api.covalenthq.com/v1/${chain}/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=${graphConfig.pageSize}`
             )
 
             //removes null from Covalent results
@@ -181,6 +180,7 @@ const Mainpage = () => {
                 })),
                 focusedNodeId: "nodeIdToTriggerZoomAnimation",
             })
+            setLoading(false)
         } catch (err) {
             console.error(err)
         }
@@ -240,36 +240,33 @@ const Mainpage = () => {
     ))
 
     return (
-        <div className="root">
-            <div className="graph_address">
-                <h3 className="graph_address__text">Currently Viewing</h3>
+        <div className="MainPage">
+            <div className="MainPage__GraphAddress">
+                <h3 className="MainPage__GraphAddress-text">
+                    Currently Viewing
+                </h3>
+                <h3 className="MainPage__GraphAddress-text">
+                    {formatAddress(graphAddress)}
+                </h3>
                 {graphAddress === userAddress ? (
-                    <>
-                        <h3 className="graph_address__text">
-                            {formatAddress(graphAddress)}
-                        </h3>
-                        <h4 className="graph_address__text">(Your Address)</h4>
-                    </>
+                    <h4 className="MainPage__GraphAddress-text">
+                        (Your Address)
+                    </h4>
                 ) : (
-                    <>
-                        <h3 className="graph_address__text">
-                            {formatAddress(graphAddress)}
-                        </h3>
-                        <h4
-                            className="graph_address__goBack"
-                            onClick={() => setGraphAddress(userAddress)}
-                        >
-                            Go Back
-                        </h4>
-                    </>
+                    <h4
+                        className="MainPage__GraphAddress-goBack"
+                        onClick={() => setGraphAddress(userAddress)}
+                    >
+                        Go Back To You
+                    </h4>
                 )}
             </div>
-            <div className="graph_info">
-                <h3 className="graph_title">Link transactions</h3>
-                <div className="drop_down_div">{dropDowns}</div>
+            <div className="MainPage__GraphInfo">
+                <h3 className="MainPage__GraphInfo-title">Link transactions</h3>
+                <div className="MainPage__GraphInfo-dropDowns">{dropDowns}</div>
             </div>
             <div
-                className="tab_div"
+                className="MainPage__tab"
                 style={{
                     bottom: tabDown ? "64px" : window.innerHeight - 64,
                 }}
@@ -280,15 +277,21 @@ const Mainpage = () => {
                     setAddress={setGraphAddress}
                     config={graphConfig}
                     setConfig={setGraphConfig}
+                    chain={chain}
+                    setChain={setChain}
                 />
             </div>
-            <Graph
-                id="graph-id"
-                data={data}
-                config={graphConfig}
-                onClickNode={onClickNode}
-                onClickLink={onClickLink}
-            />
+            {loading ? (
+                <div className="MainPage__loading">Loading...</div>
+            ) : (
+                <Graph
+                    id="graph-id"
+                    data={data}
+                    config={graphConfig}
+                    onClickNode={onClickNode}
+                    onClickLink={onClickLink}
+                />
+            )}
         </div>
     )
 }

@@ -1,23 +1,8 @@
-.LinkDropDown__header {
-    background-color: #333;
-    border: 2px solid #555;
-    border-radius: 8px;
-    height: 32px;
-    width: 98%;
-    margin-bottom: 8px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #fff;
-    font-weight: 600;
-    font-size: large;
+.LinkDropDown {
+    width: 95%;
 }
-.LinkDropDown__header:hover {
-    border: 2px solid #ff3f81;
-}
-.LinkDropDown__header_down {
+
+.LinkDropDown__header-down {
     background-color: #333;
     border: 2px solid #ff3f81;
     border-top-right-radius: 8px;
@@ -33,9 +18,26 @@
     font-weight: 600;
     font-size: large;
 }
-.LinkDropDown__main {
-    width: 95%;
+.LinkDropDown__header-up {
+    background-color: #333;
+    border: 2px solid #555;
+    border-radius: 8px;
+    height: 32px;
+    width: 98%;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    font-weight: 600;
+    font-size: large;
 }
+.LinkDropDown__header-up:hover {
+    border: 2px solid #ff3f81;
+}
+
 .LinkDropDown__body {
     height: fit-content;
     width: 98%;
@@ -45,21 +47,22 @@
     border-bottom-left-radius: 8px;
     margin-bottom: 8px;
 }
-.LinkDropDown__body_ul {
+.LinkDropDown__body-ul {
     padding: 8px;
 }
-.LinkDropDown__body_ul_title {
+.LinkDropDown__body-ul-title {
     font-family: Arial, Helvetica, sans-serif;
     color: #ff3f81;
     text-align: left;
 }
-.LinkDropDown__body_ul_text {
+.LinkDropDown__body-ul-text {
     font-family: Arial, Helvetica, sans-serif;
     color: white;
     text-align: right;
-    padding-right: 16px;
+    padding-right: 8px;
 }
-.LinkDropDown__body_li {
+.LinkDropDown__body-li {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }

@@ -1,63 +1,21 @@
-.root {
+.MainPage {
     background-color: #222;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
 }
-.graph_info {
-    background-color: #222;
-    width: 300px;
-    height: 380px;
-    border: 1px solid #444;
-    border-radius: 8px;
-    box-shadow: 2px 2px 15px 3px #000000;
-    position: absolute;
-    align-self: flex-end;
-    left: 16px;
-    bottom: 16px;
-    overflow-y: scroll;
+
+iframe {
+    pointer-events: none;
 }
 
-.graph_info::-webkit-scrollbar {
-    width: 0.3em;
-}
-
-.graph_info::-webkit-scrollbar-track {
-    box-shadow: "inset 0 0 6px #000";
-}
-
-.graph_info::-webkit-scrollbar-thumb {
-    background-color: #666;
-    border-radius: 20px;
-}
-
-.graph_title {
-    height: min-content;
-    width: 100%;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 8px;
-    font-size: 32px;
-    font-weight: "bold";
-}
-.tab_div {
-    position: absolute;
-    width: 30%;
-}
-.drop_down_div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: fit-content;
-}
-.graph_address {
+.MainPage__GraphAddress {
     position: absolute;
     left: 16px;
     top: 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     height: 100px;
     width: 300px;
@@ -66,16 +24,17 @@
     border-radius: 8px;
     box-shadow: 2px 2px 15px 3px #000000;
 }
-.graph_address__text {
+.MainPage__GraphAddress-text {
     display: flex;
     color: white;
     justify-content: center;
-    padding: 3px;
+    align-items: center;
     height: fit-content;
     width: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 5px;
 }
-.graph_address__goBack {
+.MainPage__GraphAddress-goBack {
     display: flex;
     color: white;
     justify-content: center;
@@ -88,13 +47,62 @@
     background-color: #444;
     font-family: Arial, Helvetica, sans-serif;
 }
-
-.graph_address__goBack:hover {
+.MainPage__GraphAddress-goBack:hover {
     background-color: #222;
     color: #ff3f81;
     cursor: pointer;
 }
 
-iframe {
-    pointer-events: none;
+.MainPage__GraphInfo {
+    background-color: #222;
+    width: 300px;
+    height: 380px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    box-shadow: 2px 2px 15px 3px #000000;
+    position: absolute;
+    align-self: flex-end;
+    left: 16px;
+    bottom: 16px;
+    overflow-y: scroll;
+}
+.MainPage__GraphInfo-title {
+    height: min-content;
+    width: fit-content;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px;
+    font-size: 32px;
+    font-weight: "bold";
+}
+.MainPage__GraphInfo-dropDowns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+}
+.MainPage__GraphInfo::-webkit-scrollbar {
+    width: 0.3em;
+}
+.MainPage__GraphInfo::-webkit-scrollbar-track {
+    box-shadow: "inset 0 0 6px #000";
+}
+.MainPage__GraphInfo::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-radius: 20px;
+}
+
+.MainPage__tab {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+}
+
+.MainPage__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
 }

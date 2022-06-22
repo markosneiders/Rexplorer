@@ -1,4 +1,4 @@
-.graphtab {
+.GraphTab {
     display: flex;
     height: 100%;
     flex-direction: row;
@@ -6,24 +6,7 @@
     align-items: center;
     flex-direction: column;
 }
-.logo-container {
-    background-color: rgb(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    border-bottom-left-radius: 32px;
-    border-bottom-right-radius: 32px;
-    cursor: pointer;
-}
-
-.logo {
-    width: auto;
-    height: 32px;
-}
-.GraphTab__menu_back {
+.GraphTab__menuBack {
     background-color: rgb(0, 0, 0, 0.3);
     height: 100%;
     width: 100%;
@@ -40,26 +23,26 @@
     margin-top: 10%;
     padding: 8px;
 }
-.GraphTab__menu_container {
+.GraphTab__menu-container {
     display: flex;
     flex-direction: column;
 }
-.GraphTab__menu_title {
+.GraphTab__menu-title {
     height: min-content;
     width: 100%;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-
     font-size: 32px;
     font-weight: "bold";
 }
-.GraphTab__form {
+
+.GraphTab__menu-form {
     height: fit-content;
     padding: 8px;
     margin-top: 8px;
     width: 100%;
 }
-.GraphTab__label {
+.GraphTab__menu-label {
     font-family: Arial, Helvetica, sans-serif;
     color: #ff3f81;
     font-weight: bold;
@@ -69,18 +52,37 @@
     justify-content: space-between;
     flex-direction: row;
 }
-.GraphTab__input {
+.GraphTab__menu-input {
     background-color: #222;
     border: 1px solid #444;
     border-radius: 8px;
     padding: 8px;
-    margin-left: 16px;
+    margin-left: 64px;
     margin-right: 16px;
     text-align: right;
     color: #fff;
     font-weight: bold;
     height: 8px;
+    width: 100%;
 }
+
+.GraphTab__menu_logoContainer {
+    background-color: rgb(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+    cursor: pointer;
+}
+.GraphTab__menu_logo {
+    width: auto;
+    height: 32px;
+}
+
 textarea:focus,
 input:focus {
     outline: none;
