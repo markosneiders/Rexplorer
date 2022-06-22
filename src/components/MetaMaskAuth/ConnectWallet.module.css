@@ -26,3 +26,8 @@
 .connect-wallet-loading {
     cursor: none;
 }
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -11,7 +11,7 @@ const GraphTab = (props) => {
     function handleClick() {
         setPosition(!position)
         props.click()
-        props.setAddress(address)
+        setAddress(props.address)
     }
 
     const handleSubmit = (event) => {
@@ -40,6 +40,14 @@ const GraphTab = (props) => {
                                 />
                             </label>
                         </form>
+                        {/* <button
+                            onClick={() =>
+                                props.setConfig({
+                                    ...props.config,
+                                    directed: true,
+                                })
+                            }
+                        ></button> */}
                     </div>
                 </div>
             </div>

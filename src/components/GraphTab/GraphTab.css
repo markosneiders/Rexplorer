@@ -42,7 +42,7 @@
 }
 .GraphTab__menu_container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 }
 .GraphTab__menu_title {
     height: min-content;
@@ -75,9 +75,11 @@
     border-radius: 8px;
     padding: 8px;
     margin-left: 16px;
+    margin-right: 16px;
     text-align: right;
     color: #fff;
     font-weight: bold;
+    height: 8px;
 }
 textarea:focus,
 input:focus {

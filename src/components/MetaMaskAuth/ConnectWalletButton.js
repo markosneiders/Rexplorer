@@ -22,7 +22,7 @@ const ConnectWalletButton = ({
                     className={`${styles["connect-wallet"]} ${styles["connect-button-loading"]}`}
                     disabled
                 >
-                    <div>Loading...</div>
+                    <div className={styles["loading"]}>Loading...</div>
                 </button>
             ) : (
                 <button

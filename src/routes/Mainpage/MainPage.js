@@ -24,7 +24,7 @@ const Mainpage = () => {
     const [userAddress, setUserAddress] = useState("")
     const [graphAddress, setGraphAddress] = useState("")
 
-    const myConfig = {
+    const [graphConfig, setGraphConfig] = useState({
         automaticRearrangeAfterDropNode: false,
         collapsible: false,
         directed: false,
@@ -89,13 +89,14 @@ const Mainpage = () => {
             strokeLinecap: "round",
             type: "CURVE_SMOOTH",
         },
-    }
+    })
+
     const formatAddress = (address) => {
         return `${address.slice(0, 6)}...${address.slice(-4)}`
     }
 
     const onClickNode = function (nodeId) {
-        window.alert(`Clicked node ${nodeId}`)
+        window.alert(graphAddress)
     }
 
     const onClickLink = function (source, target) {
@@ -154,27 +155,12 @@ const Mainpage = () => {
     }
 
     const getData = async () => {
-        const { ethereum } = window
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const signer = provider.getSigner()
-
-        const addr = await signer.getAddress()
-
         let response
         try {
-            if (graphAddress === "") {
-                response = await axios.get(
-                    `https://api.covalenthq.com/v1/1/address/${addr.toString()}/transactions_v2/?key=${
-                        process.env.REACT_APP_COVALENT_API_KEY
-                    }&page-size=100`
-                )
-            } else {
-                response = await axios.get(
-                    `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=100`
-                )
-            }
+            response = await axios.get(
+                `https://api.covalenthq.com/v1/1/address/${graphAddress}/transactions_v2/?key=${process.env.REACT_APP_COVALENT_API_KEY}&page-size=100`
+            )
 
-            console.log(response)
             //removes null from Covalent results
             const no_null_response = response.data.data.items.filter(
                 (item) => item.to_address !== null
@@ -184,7 +170,6 @@ const Mainpage = () => {
             // Calls functons and creates a list of nodes and links without duplicates to pass on to the graph
             const nodes = await nodeIdGen(no_null_response)
             dupeLinkRemoval(no_null_response)
-            console.log(no_null_response)
 
             await setData({
                 nodes: nodes.map((item) => ({
@@ -208,7 +193,8 @@ const Mainpage = () => {
 
         const addr = await signer.getAddress()
 
-        setUserAddress(addr.toString())
+        await setUserAddress(addr.toString())
+        await setGraphAddress(addr.toString())
     }
 
     const checkIfWalletIsConnected = async () => {
@@ -237,12 +223,14 @@ const Mainpage = () => {
     }
 
     useEffect(() => {
-        getData()
-        console.log("GetData")
-
         checkIfWalletIsConnected()
         // eslint-disable-next-line
-    }, [graphAddress, window.ethereum])
+    }, [])
+
+    useEffect(() => {
+        getData()
+        // eslint-disable-next-line
+    }, [graphAddress])
 
     function handleClick() {
         setTabDown(!tabDown)
@@ -255,10 +243,10 @@ const Mainpage = () => {
         <div className="root">
             <div className="graph_address">
                 <h3 className="graph_address__text">Currently Viewing</h3>
-                {graphAddress === "" ? (
+                {graphAddress === userAddress ? (
                     <>
                         <h3 className="graph_address__text">
-                            {formatAddress(userAddress)}
+                            {formatAddress(graphAddress)}
                         </h3>
                         <h4 className="graph_address__text">(Your Address)</h4>
                     </>
@@ -269,7 +257,7 @@ const Mainpage = () => {
                         </h3>
                         <h4
                             className="graph_address__goBack"
-                            onClick={() => setGraphAddress("")}
+                            onClick={() => setGraphAddress(userAddress)}
                         >
                             Go Back
                         </h4>
@@ -290,12 +278,14 @@ const Mainpage = () => {
                     click={handleClick}
                     address={graphAddress}
                     setAddress={setGraphAddress}
+                    config={graphConfig}
+                    setConfig={setGraphConfig}
                 />
             </div>
             <Graph
                 id="graph-id"
                 data={data}
-                config={myConfig}
+                config={graphConfig}
                 onClickNode={onClickNode}
                 onClickLink={onClickLink}
             />
