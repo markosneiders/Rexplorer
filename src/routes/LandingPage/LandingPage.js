@@ -81,7 +81,7 @@ const LandingPage = () => {
             <Header />
             <div className="LandingPage">
                 <div className="LandingPage__authBox">
-                    <div className="andingPage__authBox-header">
+                    <div className="LandingPage__authBox-header">
                         <p
                             style={{
                                 height: "fit-content",
