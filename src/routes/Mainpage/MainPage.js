@@ -282,7 +282,12 @@ const Mainpage = () => {
                 />
             </div>
             {loading ? (
-                <div className="MainPage__loading">Loading...</div>
+                <div
+                    className="MainPage__loading"
+                    style={{ height: window.innerHeight }}
+                >
+                    Loading...
+                </div>
             ) : (
                 <Graph
                     id="graph-id"
