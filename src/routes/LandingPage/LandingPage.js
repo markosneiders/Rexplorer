@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header"
 import ConnectWalletButton from "../../components/MetaMaskAuth/ConnectWalletButton"
 import "./LandingPage.css"
 import NET from "vanta/dist/vanta.net.min"
+import UAuth from "@uauth/js"
 import Web3 from "web3"
 import * as THREE from "three"
 import Metamask from "../../assets/images/metamask.png"
@@ -14,6 +15,20 @@ const LandingPage = () => {
 
     const [vantaEffect, setVantaEffect] = useState(0)
     const vantaRef = useRef(null)
+
+    const uauth = new UAuth({
+        clientID: `${process.env.REACT_APP_CLIENT_ID}`,
+        redirectUri: "http://localhost:3000",
+        scope: "openid wallet",
+    })
+
+    const login = async () => {
+        try {
+            uauth.loginWithPopup()
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     useEffect(() => {
         if (address !== "") {
@@ -93,7 +108,7 @@ const LandingPage = () => {
                                     image={Metamask}
                                 />
                                 <ConnectWalletButton
-                                    // onPressConnect={}
+                                    onPressConnect={login}
                                     // onPressLogout={}
                                     // loading={{}}
                                     // address={{}}
