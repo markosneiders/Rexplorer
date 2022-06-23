@@ -8,6 +8,7 @@ import GraphTab from "../../components/GraphTab/Graphtab"
 import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
 import defaultConfig from "./defaultConfig"
 import LoadingSpin from "react-loading-spin"
+import chains from "../../components/GraphTab/chains"
 
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
 //const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
@@ -168,8 +169,9 @@ const Mainpage = () => {
 
     useEffect(() => {
         getData()
+        console.log(graphConfig)
         // eslint-disable-next-line
-    }, [graphAddress, chain])
+    }, [graphAddress, chain, graphConfig])
 
     function handleClick() {
         setTabDown(!tabDown)
@@ -183,19 +185,32 @@ const Mainpage = () => {
         <LinkDropDown data={item} chain={chain} />
     ))
 
+    const findLabel = (id) => {
+        const found = chains.find((obj) => {
+            return obj.value === id
+        })
+        return found.label
+    }
+
     return (
         <div className="MainPage">
             <div className="MainPage__GraphAddress">
-                <h3 className="MainPage__GraphAddress-text">
+                <h2 className="MainPage__GraphAddress-text">
                     Currently Viewing
-                </h3>
-                <h3 className="MainPage__GraphAddress-text">
+                </h2>
+                <h3
+                    className="MainPage__GraphAddress-text"
+                    style={{ color: "#ff3f81" }}
+                >
                     {formatAddress(graphAddress)}
                 </h3>
+                <h3 className="MainPage__GraphAddress-text">{`On ${findLabel(
+                    chain
+                )}`}</h3>
                 {graphAddress === userAddress ? (
-                    <h4 className="MainPage__GraphAddress-text">
+                    <h5 className="MainPage__GraphAddress-text">
                         (Your Address)
-                    </h4>
+                    </h5>
                 ) : (
                     <h4
                         className="MainPage__GraphAddress-goBack"

@@ -1,8 +1,8 @@
 const defaultConfig = {
-    pageSize: 1000,
+    pageSize: 100,
     automaticRearrangeAfterDropNode: false,
     collapsible: false,
-    directed: false,
+    directed: true,
     focusAnimationDuration: 0.75,
     focusZoom: 1,
     freezeAllDragEvents: false,

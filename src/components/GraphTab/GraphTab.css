@@ -28,7 +28,14 @@
     flex-direction: column;
     padding: 8px;
     position: relative;
-    height: 95%;
+    height: fit-content;
+}
+.GraphTab__menu-containerItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
 }
 .GraphTab__menu-title {
     height: min-content;
@@ -52,6 +59,7 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
+    white-space: nowrap;
 }
 .GraphTab__menu-input {
     background-color: #222;

@@ -125,6 +125,14 @@ const LinkDropDown = (props) => {
                     </li>
                     <li className="LinkDropDown__body-li">
                         <h4 className="LinkDropDown__body-ul-title">
+                            Block height:
+                        </h4>
+                        <h4 className="LinkDropDown__body-ul-text">
+                            {props.data.block_height}
+                        </h4>
+                    </li>
+                    <li className="LinkDropDown__body-li">
+                        <h4 className="LinkDropDown__body-ul-title">
                             Successful:
                         </h4>
                         <h4 className="LinkDropDown__body-ul-text">
@@ -137,6 +145,14 @@ const LinkDropDown = (props) => {
                         </h4>
                         <h4 className="LinkDropDown__body-ul-text">
                             {`${props.data.gas_spent} GWEI`}
+                        </h4>
+                    </li>
+                    <li className="LinkDropDown__body-li">
+                        <h4 className="LinkDropDown__body-ul-title">
+                            Currency:
+                        </h4>
+                        <h4 className="LinkDropDown__body-ul-text">
+                            {props.data.to_address_label}
                         </h4>
                     </li>
                 </ul>
