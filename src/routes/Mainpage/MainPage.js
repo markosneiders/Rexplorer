@@ -7,6 +7,7 @@ import { useState, useEffect } from "react"
 import GraphTab from "../../components/GraphTab/Graphtab"
 import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
 import defaultConfig from "./defaultConfig"
+import LoadingSpin from "react-loading-spin"
 
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
 //const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
@@ -29,7 +30,10 @@ const Mainpage = () => {
     }
 
     const onClickNode = function (nodeId) {
-        window.alert(graphAddress)
+        const found = data.nodes.find((obj) => {
+            return obj.id === nodeId
+        })
+        setGraphAddress(found.fullId)
     }
 
     const onClickLink = function (source, target) {
@@ -108,12 +112,12 @@ const Mainpage = () => {
             await setData({
                 nodes: nodes.map((item) => ({
                     id: formatAddress(item),
+                    fullId: item,
                 })),
                 links: graphLinks.map((item) => ({
                     source: item.from_address,
                     target: item.to_address,
                 })),
-                focusedNodeId: "nodeIdToTriggerZoomAnimation",
             })
             setLoading(false)
         } catch (err) {
@@ -227,7 +231,10 @@ const Mainpage = () => {
                     className="MainPage__loading"
                     style={{ height: window.innerHeight }}
                 >
-                    Loading...
+                    <LoadingSpin
+                        primaryColor={"#ff3f81"}
+                        secondaryColor={"#222"}
+                    />
                 </div>
             ) : (
                 <Graph
