@@ -6,6 +6,7 @@ import { ethers } from "ethers"
 import { useState, useEffect } from "react"
 import GraphTab from "../../components/GraphTab/Graphtab"
 import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
+import defaultConfig from "./defaultConfig"
 
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
 //const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
@@ -21,73 +22,7 @@ const Mainpage = () => {
     const [graphAddress, setGraphAddress] = useState("")
     const [chain, setChain] = useState(1)
     const [loading, setLoading] = useState(true)
-    const [graphConfig, setGraphConfig] = useState({
-        pageSize: 1000,
-        automaticRearrangeAfterDropNode: false,
-        collapsible: false,
-        directed: false,
-        focusAnimationDuration: 0.75,
-        focusZoom: 1,
-        freezeAllDragEvents: false,
-        height: window.innerHeight,
-        highlightDegree: 1,
-        highlightOpacity: 0.2,
-        linkHighlightBehavior: true,
-        maxZoom: 8,
-        minZoom: 0.1,
-        nodeHighlightBehavior: true,
-        panAndZoom: false,
-        staticGraph: false,
-        staticGraphWithDragAndDrop: false,
-        width: window.innerWidth,
-        d3: {
-            alphaTarget: 1,
-            gravity: -250,
-            linkLength: 1000,
-            linkStrength: 1,
-            disableLinkForce: false,
-        },
-        node: {
-            color: "#ff3f81",
-            fontColor: "white",
-            fontSize: 12,
-            fontWeight: "normal",
-            highlightColor: "#ffffff",
-            highlightFontSize: 18,
-            highlightFontWeight: "bold",
-            highlightStrokeColor: "#ff3f81",
-            highlightStrokeWidth: 1.5,
-            labelProperty: "id",
-            mouseCursor: "pointer",
-            opacity: 1,
-            renderLabel: true,
-            size: 450,
-            strokeColor: "none",
-            strokeWidth: 1.5,
-            svg: "",
-            symbolType: "circle",
-        },
-        link: {
-            color: "#ffffff",
-            fontColor: "red",
-            fontSize: 10,
-            fontWeight: "normal",
-            highlightColor: "#ff3f81",
-            highlightFontSize: 8,
-            highlightFontWeight: "bold",
-            mouseCursor: "pointer",
-            opacity: 0.5,
-            renderLabel: false,
-            semanticStrokeWidth: true,
-            strokeWidth: 5,
-            markerHeight: 6,
-            markerWidth: 6,
-            strokeDasharray: 0,
-            strokeDashoffset: 0,
-            strokeLinecap: "round",
-            type: "CURVE_SMOOTH",
-        },
-    })
+    const [graphConfig, setGraphConfig] = useState(defaultConfig)
 
     const formatAddress = (address) => {
         return `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -230,13 +165,18 @@ const Mainpage = () => {
     useEffect(() => {
         getData()
         // eslint-disable-next-line
-    }, [graphAddress])
+    }, [graphAddress, chain])
 
     function handleClick() {
         setTabDown(!tabDown)
     }
+    function restore() {
+        detailsOn()
+        setChain(1)
+        setGraphConfig(defaultConfig)
+    }
     const dropDowns = currentLinkInfo.map((item) => (
-        <LinkDropDown data={item} />
+        <LinkDropDown data={item} chain={chain} />
     ))
 
     return (
@@ -279,6 +219,7 @@ const Mainpage = () => {
                     setConfig={setGraphConfig}
                     chain={chain}
                     setChain={setChain}
+                    restore={restore}
                 />
             </div>
             {loading ? (

@@ -3,6 +3,7 @@
 }
 
 .LinkDropDown__header-down {
+    position: relative;
     background-color: #333;
     border: 2px solid #ff3f81;
     border-top-right-radius: 8px;
@@ -60,6 +61,8 @@
     color: white;
     text-align: right;
     padding-right: 8px;
+    display: flex;
+    align-items: center;
 }
 .LinkDropDown__body-li {
     display: flex;

@@ -21,11 +21,14 @@
     border-radius: 16px;
     border: 1px solid #444;
     margin-top: 10%;
-    padding: 8px;
+    padding: 16px;
 }
 .GraphTab__menu-container {
     display: flex;
     flex-direction: column;
+    padding: 8px;
+    position: relative;
+    height: 95%;
 }
 .GraphTab__menu-title {
     height: min-content;
@@ -35,11 +38,9 @@
     font-size: 32px;
     font-weight: "bold";
 }
-
 .GraphTab__menu-form {
     height: fit-content;
-    padding: 8px;
-    margin-top: 8px;
+    margin-top: 16px;
     width: 100%;
 }
 .GraphTab__menu-label {
@@ -57,15 +58,35 @@
     border: 1px solid #444;
     border-radius: 8px;
     padding: 8px;
-    margin-left: 64px;
-    margin-right: 16px;
-    text-align: right;
+    margin-left: 48px;
     color: #fff;
     font-weight: bold;
-    height: 8px;
+    font-size: 14px;
+    height: 20px;
     width: 100%;
 }
-
+.GraphTab__menu-input:focus {
+    outline: none;
+    border: 1px solid #ff3f81;
+}
+.GraphTab__menu-input:hover {
+    border: 1px solid #ff3f81;
+}
+.GraphTab__menu-button {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #333;
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 4px;
+    cursor: pointer;
+}
+.GraphTab__menu-button:hover {
+    background-color: #222;
+    border: 2px solid #444;
+    color: #ff3f81;
+}
 .GraphTab__menu_logoContainer {
     background-color: rgb(0, 0, 0, 0.3);
     display: flex;
@@ -81,9 +102,4 @@
 .GraphTab__menu_logo {
     width: auto;
     height: 32px;
-}
-
-textarea:focus,
-input:focus {
-    outline: none;
 }

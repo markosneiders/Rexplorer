@@ -1,26 +1,59 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./GraphTab.css"
 import title from "../../assets/images/Title.png"
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
 import Select from "react-select"
 
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
+import RestoreIcon from "@mui/icons-material/Restore"
+import CheckIcon from "@mui/icons-material/Check"
+import UndoIcon from "@mui/icons-material/Undo"
 const GraphTab = (props) => {
     const [position, setPosition] = useState(true)
-    const [address, setAddress] = useState(props.address)
 
-    function handleClick() {
+    const [address, setAddress] = useState(props.address)
+    const [chain, setChain] = useState(props.chain)
+    const [config, setConfig] = useState(props.config)
+
+    useEffect(() => {
+        updateValues()
+        // eslint-disable-next-line
+    }, [props.chain, props.address, props.config])
+
+    const handleClick = () => {
         setPosition(!position)
         props.click()
-        setAddress(props.address)
     }
-
+    const updateValues = () => {
+        setChain(props.chain)
+        setAddress(props.address)
+        setConfig(props.config)
+    }
     const handleSubmit = (event) => {
         event.preventDefault()
         props.setAddress(address)
         handleClick()
     }
 
+    const handleApply = () => {
+        props.setAddress(address)
+        props.setChain(chain)
+        props.setConfig(config)
+        handleClick()
+    }
+    const handleUndo = () => {
+        updateValues()
+    }
+    const handleRestore = () => {
+        props.restore()
+    }
+
+    const findLabel = (id) => {
+        const found = chains.find((obj) => {
+            return obj.value === id
+        })
+        return found.label
+    }
     const chains = [
         { value: 1, label: "Ethereum Mainnet" },
         { value: 42, label: "Ethereum Testnet Kovan" },
@@ -60,21 +93,63 @@ const GraphTab = (props) => {
     ]
 
     const chainStyles = {
-        // option: (provided, state) => ({
-        //     ...provided,
-        //     borderBottom: "1px dotted pink",
-        //     color: state.isSelected ? "red" : "blue",
-        //     padding: 20,
-        // }),
-        // control: () => ({
-        //     // none of react-select's styles are passed to <Control />
-        //     width: 200,
-        // }),
-        // singleValue: (provided, state) => {
-        //     const opacity = state.isDisabled ? 0.5 : 1
-        //     const transition = "opacity 300ms"
-        //     return { ...provided, opacity, transition }
-        // },
+        control: (provided) => ({
+            ...provided,
+            width: 371,
+            borderRadius: 8,
+            backgroundColor: "#222",
+            border: "1px solid #444",
+            fontFamily: "Arial, Helvetica, sans-serif",
+            boxShadow: "none",
+            "&:hover": {
+                border: "1px solid #ff3f81",
+            },
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            color: "#fff",
+            fontWeight: "bold",
+            fontSize: 14,
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            border: "1px solid #444",
+        }),
+        menu: (provided) => ({
+            ...provided,
+            borderRadius: 8,
+            width: 371,
+            backgroundColor: "#222",
+            border: "1px solid #444",
+        }),
+        menuList: (provided) => ({
+            ...provided,
+            "&::-webkit-scrollbar": {
+                width: "0.3em",
+            },
+            "&::-webkit-scrollbar-track": {
+                boxShadow: "inset 0 0 6px #222",
+            },
+            "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "#666",
+                borderRadius: "20px",
+            },
+        }),
+        option: (provided) => ({
+            ...provided,
+            backgroundColor: "#222",
+            fontWeight: "bold",
+            color: "#fff",
+            fontFamily: "Arial, Helvetica, sans-serif",
+            fontSize: 14,
+            "&:hover": {
+                color: "#ff3f81",
+            },
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: "#ff3f81",
+        }),
     }
 
     return (
@@ -98,8 +173,25 @@ const GraphTab = (props) => {
                                 />
                             </label>
                         </form>
-                        <div style={{ height: "100px" }}>
-                            <Select options={chains} styles={chainStyles} />
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignContent: "center",
+                                justifyContent: "space-between",
+                                marginTop: "16px",
+                            }}
+                        >
+                            <h3 className="GraphTab__menu-label">Chain:</h3>
+                            <Select
+                                options={chains}
+                                styles={chainStyles}
+                                onChange={(e) => setChain(e.value)}
+                                value={{
+                                    label: findLabel(chain),
+                                    value: chain,
+                                }}
+                            />
                         </div>
 
                         {/* <button
@@ -110,6 +202,39 @@ const GraphTab = (props) => {
                                 })
                             }
                         ></button> */}
+                        <button
+                            style={{
+                                position: "absolute",
+                                right: 0,
+                                bottom: 16,
+                            }}
+                            className="GraphTab__menu-button"
+                            onClick={() => handleRestore()}
+                        >
+                            <RestoreIcon />
+                        </button>
+                        <button
+                            style={{
+                                position: "absolute",
+                                right: 48,
+                                bottom: 16,
+                            }}
+                            className="GraphTab__menu-button"
+                            onClick={() => handleUndo()}
+                        >
+                            <UndoIcon />
+                        </button>
+                        <button
+                            style={{
+                                position: "absolute",
+                                right: 96,
+                                bottom: 16,
+                            }}
+                            className="GraphTab__menu-button"
+                            onClick={() => handleApply()}
+                        >
+                            <CheckIcon />
+                        </button>
                     </div>
                 </div>
             </div>
