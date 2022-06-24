@@ -221,8 +221,8 @@ const GraphTab = (props) => {
                                         color: "#fff",
                                         backgroundColor: "#444",
                                     },
-                                    "& .MuiSlider-thumb": {
-                                        boxShadow: "0 0px 0px #ff3f81",
+                                    "& .MuiSlider-thumb:hover": {
+                                        boxShadow: "none",
                                     },
                                     "& .MuiSlider-track": {
                                         border: "none",
