@@ -11,6 +11,7 @@ import LoadingSpin from "react-loading-spin"
 import chains from "../../components/GraphTab/chains"
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark"
 import { Modal } from "@mui/material"
+import { useSpring, animated } from "react-spring"
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
 //const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
 //const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
@@ -199,6 +200,11 @@ const Mainpage = () => {
     function closeHelp() {
         setHelp(false)
     }
+    const tabAnimation = useSpring({
+        to: { bottom: window.innerHeight - 64 },
+        from: { bottom: 64 },
+        reverse: tabDown,
+    })
 
     return (
         <div className="MainPage">
@@ -259,12 +265,7 @@ const Mainpage = () => {
                 <h3 className="MainPage__GraphInfo-title">Link transactions</h3>
                 <div className="MainPage__GraphInfo-dropDowns">{dropDowns}</div>
             </div>
-            <div
-                className="MainPage__tab"
-                style={{
-                    bottom: tabDown ? "64px" : window.innerHeight - 64,
-                }}
-            >
+            <animated.div className="MainPage__tab" style={tabAnimation}>
                 <GraphTab
                     click={handleClick}
                     address={graphAddress}
@@ -275,7 +276,7 @@ const Mainpage = () => {
                     setChain={setChain}
                     restore={restore}
                 />
-            </div>
+            </animated.div>
             {loading ? (
                 <div
                     className="MainPage__loading"
