@@ -77,7 +77,13 @@ const LandingPage = () => {
     const onPressLogout = () => setAddress("")
 
     return (
-        <div ref={vantaRef}>
+        <div
+            ref={vantaRef}
+            style={{
+                height: window.innerHeight,
+                width: window.innerWidth,
+            }}
+        >
             <Header />
             <div className="LandingPage">
                 <div className="LandingPage__authBox">
@@ -88,9 +94,9 @@ const LandingPage = () => {
                                 display: "flex",
                                 justifyContent: "start",
                                 fontWeight: "bold",
-                                marginTop: "16px",
                                 fontSize: "large",
                                 marginLeft: "16px",
+                                marginBottom: "8px",
                             }}
                         >
                             Connect a wallet

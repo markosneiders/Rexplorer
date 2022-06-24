@@ -4,7 +4,6 @@
     width: 100%;
     justify-content: center;
     align-items: center;
-    display: flex;
     flex-direction: column;
 }
 
@@ -22,16 +21,16 @@ iframe {
     align-items: center;
     margin-bottom: 250px;
     border: 1px solid #444;
+    background-color: #181b1fe7;
 }
 .LandingPage__authBox-header {
     width: 100%;
     height: 52px;
-    padding: 16px;
+    padding-left: 16;
     font-size: 16px;
     font-family: "Inter custom", sans-serif;
     display: flex;
     align-items: center;
-    justify-content: center;
     background-color: #181b1fe7;
     color: white;
 }
