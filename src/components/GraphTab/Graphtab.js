@@ -69,7 +69,7 @@ const GraphTab = (props) => {
     const selectStyles = {
         control: (provided) => ({
             ...provided,
-            width: 371,
+            width: 230,
             borderRadius: 8,
             backgroundColor: "#222",
             border: "1px solid #444",
@@ -92,7 +92,7 @@ const GraphTab = (props) => {
         menu: (provided) => ({
             ...provided,
             borderRadius: 8,
-            width: 371,
+            width: 230,
             backgroundColor: "#222",
             border: "1px solid #444",
         }),
@@ -130,6 +130,39 @@ const GraphTab = (props) => {
         <div className="GraphTab">
             <div className="GraphTab__menuBack">
                 <div className="GraphTab__menu">
+                    <button
+                        style={{
+                            position: "absolute",
+                            right: 16,
+                            bottom: 16,
+                        }}
+                        className="GraphTab__menu-button"
+                        onClick={() => handleRestore()}
+                    >
+                        <RestoreIcon />
+                    </button>
+                    <button
+                        style={{
+                            position: "absolute",
+                            right: 64,
+                            bottom: 16,
+                        }}
+                        className="GraphTab__menu-button"
+                        onClick={() => handleUndo()}
+                    >
+                        <UndoIcon />
+                    </button>
+                    <button
+                        style={{
+                            position: "absolute",
+                            right: 112,
+                            bottom: 16,
+                        }}
+                        className="GraphTab__menu-button"
+                        onClick={() => handleApply()}
+                    >
+                        <CheckIcon />
+                    </button>
                     <h3 className="GraphTab__menu-title">Graph settings</h3>
                     <div
                         className="GraphTab__menu-container"
@@ -163,10 +196,7 @@ const GraphTab = (props) => {
                             />
                         </div>
                     </div>
-                    <div
-                        className="GraphTab__menu-container"
-                        style={{ height: "78%" }}
-                    >
+                    <div className="GraphTab__menu-container">
                         <div className="GraphTab__menu-containerItem">
                             <h3 className="GraphTab__menu-label">
                                 Transaction count:
@@ -186,8 +216,7 @@ const GraphTab = (props) => {
                                 }
                                 sx={{
                                     color: "#ff3f81",
-                                    width: "100%",
-                                    marginLeft: "32px",
+                                    width: "230px",
                                     "& .MuiSlider-valueLabel": {
                                         color: "#fff",
                                         backgroundColor: "#444",
@@ -223,7 +252,7 @@ const GraphTab = (props) => {
                                 }
                                 sx={{
                                     color: "#ff3f81",
-                                    marginLeft: "95px",
+                                    width: "230px",
                                     "& .MuiSlider-valueLabel": {
                                         color: "#fff",
                                         backgroundColor: "#444",
@@ -260,39 +289,6 @@ const GraphTab = (props) => {
                                 }}
                             />
                         </div>
-                        <button
-                            style={{
-                                position: "absolute",
-                                right: 0,
-                                bottom: 16,
-                            }}
-                            className="GraphTab__menu-button"
-                            onClick={() => handleRestore()}
-                        >
-                            <RestoreIcon />
-                        </button>
-                        <button
-                            style={{
-                                position: "absolute",
-                                right: 48,
-                                bottom: 16,
-                            }}
-                            className="GraphTab__menu-button"
-                            onClick={() => handleUndo()}
-                        >
-                            <UndoIcon />
-                        </button>
-                        <button
-                            style={{
-                                position: "absolute",
-                                right: 96,
-                                bottom: 16,
-                            }}
-                            className="GraphTab__menu-button"
-                            onClick={() => handleApply()}
-                        >
-                            <CheckIcon />
-                        </button>
                     </div>
                 </div>
             </div>
