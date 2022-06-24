@@ -9,7 +9,8 @@ import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
 import defaultConfig from "./defaultConfig"
 import LoadingSpin from "react-loading-spin"
 import chains from "../../components/GraphTab/chains"
-
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark"
+import { Modal } from "@mui/material"
 //const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
 //const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
 //const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
@@ -24,6 +25,7 @@ const Mainpage = () => {
     const [graphAddress, setGraphAddress] = useState("")
     const [chain, setChain] = useState(1)
     const [loading, setLoading] = useState(true)
+    const [help, setHelp] = useState(false)
     const [graphConfig, setGraphConfig] = useState(defaultConfig)
 
     const formatAddress = (address) => {
@@ -191,9 +193,42 @@ const Mainpage = () => {
         })
         return found.label
     }
+    function openHelp() {
+        setHelp(true)
+    }
+    function closeHelp() {
+        setHelp(false)
+    }
 
     return (
         <div className="MainPage">
+            <button
+                style={{
+                    position: "absolute",
+                    right: 16,
+                    top: 16,
+                }}
+                className="MainPage__helpButton"
+                onClick={() => openHelp()}
+            >
+                <QuestionMarkIcon />
+            </button>
+            <Modal open={help} onClose={() => closeHelp()}>
+                <div className="MainPage__help">
+                    <h1 className="MainPage__help-title">Help</h1>
+                    <h1 className="MainPage__help-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit
+                        anim id est laborum.
+                    </h1>
+                </div>
+            </Modal>
             <div className="MainPage__GraphAddress">
                 <h2 className="MainPage__GraphAddress-text">
                     Currently Viewing
