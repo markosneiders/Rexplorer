@@ -48,6 +48,7 @@ const LandingPage = () => {
                     scaleMobile: 1.0,
                     points: 18.0,
                     maxDistance: 24.0,
+                    backgroundColor: "#222",
                 })
             )
         }
@@ -113,9 +114,6 @@ const LandingPage = () => {
                         />
                         <ConnectWalletButton
                             onPressConnect={login}
-                            // onPressLogout={}
-                            // loading={{}}
-                            // address={{}}
                             name={"Unstoppable"}
                             image={Unstoppable}
                         />

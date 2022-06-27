@@ -1,22 +1,31 @@
+//React and css import
 import React from "react"
 import "./MainPage.css"
+import { useState, useEffect } from "react"
+
+//Component import
+import GraphTab from "../../components/GraphTab/Graphtab"
+import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
+
+//Graph default config
+import defaultConfig from "./defaultConfig"
+
+//Supported chain import
+import chains from "../../components/GraphTab/chains"
+
+//Asset packages
+import LoadingSpin from "react-loading-spin"
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark"
+
+//Packages
 import { Graph } from "react-d3-graph"
 import axios from "axios"
 import { ethers } from "ethers"
-import { useState, useEffect } from "react"
-import GraphTab from "../../components/GraphTab/Graphtab"
-import LinkDropDown from "../../components/LinkDropDown/LinkDropDown"
-import defaultConfig from "./defaultConfig"
-import LoadingSpin from "react-loading-spin"
-import chains from "../../components/GraphTab/chains"
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark"
 import { Modal } from "@mui/material"
 import { useSpring, animated } from "react-spring"
-//const graphAddress = "0xa79E63e78Eec28741e711f89A672A4C40876Ebf3"
-//const graphAddress = "0xf67026be4122B07259785C13adCeb0bAaBB3e068"
-//const graphAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
 
 const Mainpage = () => {
+    //States galore
     const [data, setData] = useState({})
     const graphLinks = []
     const [linkInfo, setLinkInfo] = useState({})
@@ -29,20 +38,73 @@ const Mainpage = () => {
     const [help, setHelp] = useState(false)
     const [graphConfig, setGraphConfig] = useState(defaultConfig)
 
+    useEffect(() => {
+        checkIfWalletIsConnected()
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        getData()
+        console.log(graphConfig)
+        // eslint-disable-next-line
+    }, [graphAddress, chain, graphConfig])
+
+    //Helper functions
+    //Formats address to a more readable format
     const formatAddress = (address) => {
         return `${address.slice(0, 6)}...${address.slice(-4)}`
     }
+    //Returns chain name given id
+    const findLabel = (id) => {
+        const found = chains.find((obj) => {
+            return obj.value === id
+        })
+        return found.label
+    }
 
+    //Animation for settings tab
+    const tabAnimation = useSpring({
+        to: { bottom: window.innerHeight - 64 },
+        from: { bottom: 64 },
+        reverse: tabDown,
+    })
+
+    //Functions that handle stuff
+    //Handles node click
     const onClickNode = function (nodeId) {
         const found = data.nodes.find((obj) => {
             return obj.id === nodeId
         })
         setGraphAddress(found.fullId)
     }
-
+    //Handles link click
     const onClickLink = function (source, target) {
         getLinkByAddress(source, target)
     }
+    //Handles settings tab click
+    function handleClick() {
+        setTabDown(!tabDown)
+    }
+    //Handles help menu opening and closing
+    function openHelp() {
+        setHelp(true)
+    }
+    function closeHelp() {
+        setHelp(false)
+    }
+    //Handles request to restore graph settings to default
+    function restore() {
+        detailsOn()
+        setChain(1)
+        setGraphConfig(defaultConfig)
+    }
+
+    //Renders link transaction drop down menus
+    const dropDowns = currentLinkInfo.map((item) => (
+        <LinkDropDown data={item} chain={chain} />
+    ))
+
+    //Gets all transactions contained in a link for use by link transaction
     const getLinkByAddress = (address1, address2) => {
         const allId = []
         const returnData = []
@@ -63,6 +125,7 @@ const Mainpage = () => {
         }
         setCurrentLinkInfo(returnData)
     }
+
     //Generates a list of all nodes invovled with transactions (without duplicates)
     const nodeIdGen = (item) => {
         const data1 = []
@@ -78,6 +141,7 @@ const Mainpage = () => {
         return data1
     }
 
+    //Removes duplicate links
     const dupeLinkRemoval = (item) => {
         const data1 = []
         for (var i = 0; i < item.length; i++) {
@@ -95,6 +159,7 @@ const Mainpage = () => {
         }
     }
 
+    //Fetches data from Covalent APIs (Thanks guys!)
     const getData = async () => {
         setLoading(true)
         let response
@@ -129,6 +194,7 @@ const Mainpage = () => {
         }
     }
 
+    //Gets logged in user address and updates states accordingly
     const detailsOn = async () => {
         const { ethereum } = window
         const provider = new ethers.providers.Web3Provider(ethereum)
@@ -140,6 +206,7 @@ const Mainpage = () => {
         await setGraphAddress(addr.toString())
     }
 
+    //Checks if wallet is connected
     const checkIfWalletIsConnected = async () => {
         try {
             const { ethereum } = window
@@ -165,47 +232,6 @@ const Mainpage = () => {
         }
     }
 
-    useEffect(() => {
-        checkIfWalletIsConnected()
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        getData()
-        console.log(graphConfig)
-        // eslint-disable-next-line
-    }, [graphAddress, chain, graphConfig])
-
-    function handleClick() {
-        setTabDown(!tabDown)
-    }
-    function restore() {
-        detailsOn()
-        setChain(1)
-        setGraphConfig(defaultConfig)
-    }
-    const dropDowns = currentLinkInfo.map((item) => (
-        <LinkDropDown data={item} chain={chain} />
-    ))
-
-    const findLabel = (id) => {
-        const found = chains.find((obj) => {
-            return obj.value === id
-        })
-        return found.label
-    }
-    function openHelp() {
-        setHelp(true)
-    }
-    function closeHelp() {
-        setHelp(false)
-    }
-    const tabAnimation = useSpring({
-        to: { bottom: window.innerHeight - 64 },
-        from: { bottom: 64 },
-        reverse: tabDown,
-    })
-
     return (
         <div className="MainPage">
             <button
@@ -221,17 +247,42 @@ const Mainpage = () => {
             </button>
             <Modal open={help} onClose={() => closeHelp()}>
                 <div className="MainPage__help">
-                    <h1 className="MainPage__help-title">Help</h1>
+                    <h1 className="MainPage__help-title">Graph</h1>
                     <h1 className="MainPage__help-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        Welcome to Rexplorer. Currently in the center of the
+                        screen should be a graph displaying your recent
+                        transactions. If not you haven't made any. Hovering over
+                        a node will highlight all the connected nodes. To
+                        navigate around the graph click and drag to pan around
+                        and use the sroll whell to zoom. Each node can also be
+                        repositioned by draging it.
+                    </h1>
+                    <h1 className="MainPage__help-title">Link transactions</h1>
+                    <h1 className="MainPage__help-text">
+                        To get started exploring click on a link. You should see
+                        one or multiple items in the link transactions screen.
+                        Clicking on one will expand it and show the transactions
+                        info. From there you can copy the relevant data or click
+                        on the top right icon to open in etherscan. (Only
+                        avaivable on the ethereum mainnet)
+                    </h1>
+                    <h1 className="MainPage__help-title">Exploring</h1>
+                    <h1 className="MainPage__help-text">
+                        On the top left you can see the current address (by
+                        default yours) you are viewing aswell as the chain.
+                        (This will come in handy in a bit). Clicking on a node
+                        will select it as the main address and change the graph
+                        to show it's transactions. If you ever get lost you can
+                        click the "Go Back To You" button and return to your
+                        address.
+                    </h1>
+                    <h1 className="MainPage__help-title">Customization</h1>
+                    <h1 className="MainPage__help-text">
+                        Clicking on the top header will open the seetings tab.
+                        From here you can manually enter and address to explore
+                        aswell as the chain. Other options include changing the
+                        amount of transactions, link length and type. (Be warned
+                        high transaction counts will impact performance).
                     </h1>
                 </div>
             </Modal>
