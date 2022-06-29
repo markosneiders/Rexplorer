@@ -22,8 +22,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -41,6 +39,8 @@
     Built for the Covalent challenge in the GR14 hackathon
     <br />
     <a href="https://github.com/markosneiders/Rexplorer"><strong>Try it out »</strong></a>
+     <br />
+    <a href="https://docs.google.com/presentation/d/1l08Zce-JNWHk3KqDiV4C8kgTKGRmo5ushDZ--vuKcX4/edit?usp=sharing"><strong>View the presentation »</strong></a>
 
   </p>
 </div>
@@ -54,6 +54,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+       <li><a href="#presentation">Presentation</a></li>
        <li><a href="#features">Features</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -66,6 +67,8 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+        <li><a href="#creators">Creators</a></li>
+      <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -78,6 +81,9 @@
 [![Rexplorer Screen Shot][product-screenshot]](https://example.com)
 
 Rexplorer is a graphical transaction relationship explorer utilizing Covalent APIs. We created this to supplement existing chain exploration tools such as [etherscan](https://etherscan.io/) by providing a graphical alternative to better visualize the data.
+
+## Presentation
+There is an presentation avaivable [here](https://docs.google.com/presentation/d/1l08Zce-JNWHk3KqDiV4C8kgTKGRmo5ushDZ--vuKcX4/edit?usp=sharing)
 
 ## Features
 * Large, intuitive, and easy to read graph
@@ -142,8 +148,15 @@ Make sure you have the latest [node and npm](https://nodejs.org/en/download/) ve
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+# Creators
+Rexplorer was made with love by @zappingmadnnes and @markosneiders <3
+* @zappingmadnnes created the main page, the graph and it's logic
+* @markosneiders created landing page and authentication
+
+We learned so many new things and concepts while creating Rexplorer and would like to thank Covalent for the challenge! 
+
 <!-- LICENSE -->
-## License
+# License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
