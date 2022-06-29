@@ -112,11 +112,11 @@ const LandingPage = () => {
                             name={"MetaMask"}
                             image={Metamask}
                         />
-                        <ConnectWalletButton
+                        {/* <ConnectWalletButton
                             onPressConnect={login}
                             name={"Unstoppable"}
                             image={Unstoppable}
-                        />
+                        /> */}
                     </div>
                 </div>
             </div>
