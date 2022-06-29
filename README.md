@@ -38,7 +38,7 @@
     <br />
     Built for the Covalent challenge in the GR14 hackathon
     <br />
-    <a href="https://github.com/markosneiders/Rexplorer"><strong>Try it out »</strong></a>
+    <a href="https://rexplorer.vercel.app/"><strong>Try it out »</strong></a>
      <br />
     <a href="https://docs.google.com/presentation/d/1l08Zce-JNWHk3KqDiV4C8kgTKGRmo5ushDZ--vuKcX4/edit?usp=sharing"><strong>View the presentation »</strong></a>
 
@@ -118,7 +118,7 @@ There is an presentation avaivable [here](https://docs.google.com/presentation/d
 
 ## Demo
 
-You can try out rexplorer without installing it locally [here](https://example.com). Simply log in with Metamask and get exploring!
+You can try out rexplorer without installing it locally [here](https://rexplorer.vercel.app/). Simply log in with Metamask and get exploring!
 
 
 ## Prerequisites
