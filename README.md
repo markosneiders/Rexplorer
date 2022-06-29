@@ -38,7 +38,7 @@
   <p align="center">
     Graphical transaction relationships explorer on 30 chains using the Covalent API
     <br />
-    Built for Covalent challenge in the GR14 hackathon
+    Built for the Covalent challenge in the GR14 hackathon
     <br />
     <a href="https://github.com/markosneiders/Rexplorer"><strong>Try it out »</strong></a>
 
@@ -141,6 +141,13 @@ Make sure you have the latest [node and npm](https://nodejs.org/en/download/) ve
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- ACKNOWLEDGMENTS -->
