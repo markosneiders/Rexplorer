@@ -41,6 +41,8 @@
     <a href="https://rexplorer.vercel.app/"><strong>Try it out »</strong></a>
      <br />
     <a href="https://docs.google.com/presentation/d/1l08Zce-JNWHk3KqDiV4C8kgTKGRmo5ushDZ--vuKcX4/edit?usp=sharing"><strong>View the presentation »</strong></a>
+     <br />
+     <a href="https://youtu.be/HM9j_cWFk6w"><strong>Video Demo »</strong></a>
 
   </p>
 </div>
