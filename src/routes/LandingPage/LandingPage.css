@@ -13,7 +13,7 @@ iframe {
 
 .LandingPage__authBox {
     width: 418px;
-    height: 220px;
+    height: fit-content;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -22,6 +22,7 @@ iframe {
     margin-bottom: 250px;
     border: 1px solid #444;
     background-color: #181b1fe7;
+    padding: 8px;
 }
 .LandingPage__authBox-header {
     width: 100%;
